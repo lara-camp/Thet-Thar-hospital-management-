@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
+use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginLogoutController;
 
 /*
@@ -22,6 +23,4 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::post('/password/email',  [ForgotPasswordController::class, 'sendResetMail']);
 Route::post('/password/reset', [ForgotPasswordController::class, 'resetNewPassword']);
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-// });
+Route::post("/register",[RegisterController::class, "Register"])->middleware("throttle:60,1");
