@@ -2,9 +2,13 @@
 
 namespace App\Traits;
 
-trait HttpResponses {
+use Illuminate\Pagination\LengthAwarePaginator;
 
-    protected function success ($message, $data = [], $code = 200) {
+trait HttpResponses
+{
+
+    protected function success($message, $data = null, $code = 200)
+    {
         return response()->json([
             'status' => true,
             'message' => $message,
@@ -12,11 +16,23 @@ trait HttpResponses {
         ], $code);
     }
 
-    protected function error ($message, $data = null, $code = 422) {
+    protected function error($message, $data = null, $code = 422)
+    {
         return response()->json([
             'status' => false,
             'message' => $message,
             'data' => $data
         ], $code);
+    }
+
+    public static function getPaginationMeta(LengthAwarePaginator $data)
+    {
+        return [
+            'currentPage' => $data->currentPage(),
+            'totalPages' => $data->lastPage(),
+            'startOffset' => $data->firstItem(),
+            'endOffset' => $data->lastItem(),
+            'totalItems' => $data->total(),
+        ];
     }
 }
