@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginLogoutController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
+use App\Http\Controllers\Api\HospitalController;
 use App\Http\Controllers\Api\PatientController;
 
 /*
@@ -25,6 +26,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 });
 
+Route::apiResource('/hospitals', HospitalController::class);
 Route::apiResource('/doctors', DoctorController::class);
 Route::apiResource('/patients', PatientController::class);
 Route::post('/password/email',  [ForgotPasswordController::class, 'sendResetMail']);
