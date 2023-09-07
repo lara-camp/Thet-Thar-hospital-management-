@@ -4,7 +4,8 @@ info:
   version: 1.0.0
   description: ''
 servers:
-  - url: 'http://127.0.0.1/api'
+  - url: 'http://127.0.0.1:8000/api'
+    description: 'Local:8000'
 tags:
   - name: Auth
   - name: Doctors
@@ -104,7 +105,7 @@ paths:
     get:
       tags:
         - Doctors
-      summary: FetchDoctors
+      summary: Fetch Doctors
       parameters:
         - name: Accept
           in: header
