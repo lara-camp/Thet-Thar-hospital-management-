@@ -1,0 +1,196 @@
+openapi: 3.0.0
+info:
+  title: Hospital
+  version: 1.0.0
+  description: ''
+servers:
+  - url: 'http://127.0.0.1/api'
+tags:
+  - name: Auth
+  - name: Doctors
+paths:
+  /password/email:
+    post:
+      tags:
+        - Auth
+      summary: ForgotPasswordEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                email: blackplayerbk@gmail.com
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /password/reset:
+    post:
+      tags:
+        - Auth
+      summary: ResetNewPassword
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                code: '473832'
+                password: '12345678'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /login:
+    post:
+      tags:
+        - Auth
+      summary: Login
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: test@gmail.com
+                password:
+                  type: string
+                  example: password
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /logout:
+    post:
+      tags:
+        - Auth
+      summary: Logout
+      requestBody:
+        content: {}
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /doctors:
+    get:
+      tags:
+        - Doctors
+      summary: FetchDoctors
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - Doctors
+      summary: Create Doctor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Min Aung Hlaing
+                phone: '1234567890'
+                email: minaunghlaing@dog.com
+                department: Cleaner
+                experience: 1
+                address: 123 Main St
+                bio: Thief
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  '/doctors/{id}':
+    get:
+      tags:
+        - Doctors
+      summary: Detail Doctor
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+        description: '2'
+    put:
+      summary: ''
+      operationId: put-doctors-id
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: ''
+      operationId: delete-doctors-id
+      responses:
+        '200':
+          description: OK
