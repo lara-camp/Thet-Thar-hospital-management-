@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('address');
             $table->text('bio');
             $table->bigInteger('user_id')->nullable();
+            $table->boolean('is_visible')->default(true);
             $table->timestamps();
         });
     }
