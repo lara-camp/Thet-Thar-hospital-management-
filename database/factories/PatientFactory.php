@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Doctor>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Patient>
  */
-class DoctorFactory extends Factory
+class PatientFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,9 +19,6 @@ class DoctorFactory extends Factory
         return [
             'user_id' => $this->faker->numberBetween(1, 10),
             'hospital_id' => $this->faker->numberBetween(1, 10),
-            'department' => $this->faker->word,
-            'experience' => $this->faker->numberBetween(0, 10), // Assuming experience is an integer.
-            'bio' => $this->faker->text,
         ];
     }
 }
