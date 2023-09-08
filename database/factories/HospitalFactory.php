@@ -17,7 +17,12 @@ class HospitalFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->name(),
+            'phone' => fake()->phoneNumber(),
+            'email' => fake()->unique()->safeEmail(),
+            'address' => fake()->address(),
+            'bio' => 'lorem ispam',
+            'user_id' => fake()->numberBetween(1,10),
         ];
     }
 }

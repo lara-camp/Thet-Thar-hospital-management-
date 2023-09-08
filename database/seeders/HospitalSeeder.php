@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Hospital;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,11 @@ class HospitalSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Hospital::truncate();
+        $data = Hospital::factory(10)->make();
+        $chunks = $data->chunk(10);
+        $chunks->each(function ($chunk) {
+            Hospital::insert($chunk->toArray());
+        });
     }
 }

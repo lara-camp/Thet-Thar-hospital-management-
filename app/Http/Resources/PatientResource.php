@@ -19,7 +19,7 @@ class PatientResource extends JsonResource
             "name" => $this->name,
             "email" => $this->email,
             "phone" => $this->phone,
-            "date" => $this->created_at->format("d M Y"),
+            "date" => $this->created_at,
         ];
     }
 }
