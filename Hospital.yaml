@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: ''
 servers:
-  - url: 'http://127.0.0.1/api'
+  - url: 'http://127.0.0.1:8000/api'
 tags:
   - name: Auth
   - name: Doctors
@@ -194,3 +194,11 @@ paths:
       responses:
         '200':
           description: OK
+  /patients:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-patients
+      x-internal: false
+    parameters: []
