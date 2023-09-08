@@ -84,11 +84,25 @@ paths:
                 password:
                   type: string
                   example: password
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+        description: ''
       responses:
         '200':
           description: Successful response
           content:
             application/json: {}
+            application/xml:
+              schema:
+                type: object
+                properties: {}
+      description: ''
   /logout:
     post:
       tags:
@@ -122,6 +136,16 @@ paths:
           description: Successful response
           content:
             application/json: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+          application/xml:
+            schema:
+              type: object
+              properties: {}
     post:
       tags:
         - Doctors
