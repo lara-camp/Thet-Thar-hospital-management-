@@ -5,10 +5,7 @@ info:
   description: ''
 servers:
   - url: 'http://127.0.0.1:8000/api'
-<<<<<<< HEAD
-=======
     description: 'Local:8000'
->>>>>>> bea35aff4f8f7b7227485b4c57e918fc48221c18
 tags:
   - name: Auth
   - name: Doctors
