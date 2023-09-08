@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 100);
-            $table->string('phone');
-            $table->string('email')->unique();
+            $table->foreignId('user_id')->unsigned();
+            $table->foreignId('hospital_id')->unsigned();
             $table->string('department', 100);
             $table->integer('experience');
-            $table->string('address', 100);
             $table->text('bio')->nullable();
             $table->timestamps();
         });

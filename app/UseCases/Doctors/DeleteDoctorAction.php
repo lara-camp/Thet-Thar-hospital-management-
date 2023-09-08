@@ -2,11 +2,16 @@
 
 namespace App\UseCases\Doctors;
 
+use App\Models\User;
+
 class DeleteDoctorAction
 {
     public function __invoke($doctor): int
     {
-        $doctor->delete();
+        $deleteData = User::where('id', $doctor->user_id)->firstOrFail();
+        $deleteData->update([
+            'is_visible' => false,
+        ]);
         return 200;
     }
 }

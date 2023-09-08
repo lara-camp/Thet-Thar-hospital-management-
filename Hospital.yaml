@@ -5,6 +5,10 @@ info:
   description: ''
 servers:
   - url: 'http://127.0.0.1:8000/api'
+<<<<<<< HEAD
+=======
+    description: 'Local:8000'
+>>>>>>> bea35aff4f8f7b7227485b4c57e918fc48221c18
 tags:
   - name: Auth
   - name: Doctors
@@ -104,7 +108,7 @@ paths:
     get:
       tags:
         - Doctors
-      summary: FetchDoctors
+      summary: Fetch Doctors
       parameters:
         - name: Accept
           in: header
@@ -194,6 +198,7 @@ paths:
       responses:
         '200':
           description: OK
+<<<<<<< HEAD
   /patients:
     get:
       summary: Your GET endpoint
@@ -202,3 +207,6 @@ paths:
       operationId: get-patients
       x-internal: false
     parameters: []
+=======
+      parameters: []
+>>>>>>> bea35aff4f8f7b7227485b4c57e918fc48221c18
