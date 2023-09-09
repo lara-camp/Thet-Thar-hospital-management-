@@ -195,4 +195,50 @@ paths:
       responses:
         '200':
           description: OK
-      parameters: []
+  /patients:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-patients
+      x-internal: false
+    parameters: []
+    post:
+      summary: ''
+      operationId: post-patients
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                '':
+                  type: string
+  '/patients/{id}':
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-patients
+      x-internal: false
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+    put:
+      summary: ''
+      operationId: put-patients-id
+      responses:
+        '200':
+          description: OK
+    delete:
+      summary: ''
+      operationId: delete-patients-id
+      responses:
+        '200':
+          description: OK
