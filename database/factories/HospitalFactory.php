@@ -18,11 +18,11 @@ class HospitalFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-            'phone' => fake()->phoneNumber(),
             'email' => fake()->unique()->safeEmail(),
+            'phone' => fake()->phoneNumber(),
             'address' => fake()->address(),
-            'bio' => 'lorem ispam',
-            'user_id' => fake()->numberBetween(1,10),
+            'user_id' => $this->faker->numberBetween(1, 10),
+            'bio' => $this->faker->text,
         ];
     }
 }
