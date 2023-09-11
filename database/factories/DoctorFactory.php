@@ -19,7 +19,7 @@ class DoctorFactory extends Factory
         return [
             'user_id' => $this->faker->numberBetween(1, 10),
             'hospital_id' => $this->faker->numberBetween(1, 10),
-            'department' => $this->faker->word,
+            'department_id' => $this->faker->numberBetween(1, 10),
             'experience' => $this->faker->numberBetween(0, 10), // Assuming experience is an integer.
             'bio' => $this->faker->text,
         ];
