@@ -7,6 +7,7 @@ use App\Mail\VerificationEmail;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 
@@ -47,9 +48,7 @@ class RegisterController extends Controller
         if ($user) {
             $user->markEmailAsVerified();
 
-            return response()->json([
-                'message' => 'Your email has been verified.',
-            ]);
+            return Redirect::to("https://google.com");
         } else {
             return response()->json([
                 'message' => 'Invalid verification link.',
