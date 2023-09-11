@@ -25,7 +25,6 @@ Route::middleware('auth:sanctum')->group(function () {
     //ADD MORE ROUTES HERE
 
 });
-Route::get('/gethashtags',[\App\Http\Controllers\Api\GetHashTagForHospital::class,"getHashTagForHospital"]);
 Route::apiResource('/hospitals', HospitalController::class);
 Route::apiResource('/doctors', DoctorController::class);
 Route::apiResource('/patients', PatientController::class);
