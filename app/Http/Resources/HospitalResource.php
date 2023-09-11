@@ -22,6 +22,7 @@ class HospitalResource extends JsonResource
             'phone' => $this->phone,
             'address' => $this->address,
             'bio' => $this->bio,
+            'department'=>$this->GetHashTagForHospital($this->id),
             'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
         ];
     }
