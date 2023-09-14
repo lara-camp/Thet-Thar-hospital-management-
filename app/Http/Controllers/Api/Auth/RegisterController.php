@@ -20,7 +20,6 @@ class RegisterController extends Controller
             "email" => "required|email|unique:users,email",
             "password" => [
                 "required",
-                "confirmed",
                 Password::min(5)->letters()
             ]
         ]);
