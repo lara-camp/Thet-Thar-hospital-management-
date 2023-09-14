@@ -23,12 +23,11 @@ Route::post('/login', [LoginLogoutController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LoginLogoutController::class, 'logout']);
     //ADD MORE ROUTES HERE
-
+    Route::apiResource('/hospitals', HospitalController::class);
+    Route::apiResource('/doctors', DoctorController::class);
+    Route::apiResource('/patients', PatientController::class);
 });
-Route::apiResource('/hospitals', HospitalController::class);
-Route::apiResource('/doctors', DoctorController::class);
-Route::apiResource('/patients', PatientController::class);
 
 Route::post('/password/email',  [ForgotPasswordController::class, 'sendResetMail']);
 Route::post('/password/reset', [ForgotPasswordController::class, 'resetNewPassword']);
-Route::post("/register", [RegisterController::class, "Register"])->middleware("throttle:60,1");
+Route::post('/register', [RegisterController::class, 'register']);
