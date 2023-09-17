@@ -1,21 +1,21 @@
 <?php
 
 
-namespace App\UseCases\Hospitals;
+namespace App\UseCases\Users;
 
 use App\Helpers\FileHelper;
-use App\Models\Hospital;
+use App\Models\User;
 use App\Traits\HttpResponses;
 
-class StoreHospitalAction
+class StoreUserAction
 {
     use HttpResponses;
     public function __invoke($formData): int
     {
         $fileName = FileHelper::fileMover($formData['image']);
-        $hospital = Hospital::create($formData);
+        $user = User::create($formData);
         // Create an Image model and associate it with the hospital using morphTo
-        $hospital->images()->create([
+        $user->images()->create([
             'url' =>  config('folderName') . '/' . $fileName, // Adjust the path as needed
         ]);
         return 201;

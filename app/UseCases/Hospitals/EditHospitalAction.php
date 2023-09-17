@@ -11,7 +11,10 @@ class EditHospitalAction
     use HttpResponses;
     public function __invoke($formData, $hospital): Hospital
     {
-        $hospital->update($formData);   
+        if (request()->hasFile('image')) {
+            $hospital->images()->delete();
+        }
+        $hospital->update($formData);
         return $hospital;
     }
 }

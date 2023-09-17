@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        config(['fileStorage' => 'public']);
+        config(['folderName' => '/images']);
     }
 }
