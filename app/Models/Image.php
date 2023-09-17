@@ -5,14 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Image extends Model
 {
     use HasFactory;
 
     protected $guarded = ['id'];
 
-    public function doctors()
+    public function imageable()
     {
-        return $this->belongsTo(Doctor::class, 'department_id');
+        return $this->morphTo();
     }
 }

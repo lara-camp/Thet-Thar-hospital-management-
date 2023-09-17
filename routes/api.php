@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Auth\LoginLogoutController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
 use App\Http\Controllers\Api\HospitalController;
 use App\Http\Controllers\Api\PatientController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ use App\Http\Controllers\Api\PatientController;
 Route::post('/login', [LoginLogoutController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LoginLogoutController::class, 'logout']);
-    //ADD MORE ROUTES HERE
+    Route::apiResource('/users', UserController::class);
     Route::apiResource('/hospitals', HospitalController::class);
     Route::apiResource('/doctors', DoctorController::class);
     Route::apiResource('/patients', PatientController::class);

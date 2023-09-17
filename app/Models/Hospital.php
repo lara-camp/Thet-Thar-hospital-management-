@@ -17,7 +17,11 @@ class Hospital extends Model
     }
     public function patients()
     {
-        return $this->hasMany(Patient::class,'hospital_id');
+        return $this->hasMany(Patient::class, 'hospital_id');
+    }
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
     }
 
     public function GetHashTagForHospital($id){
@@ -33,4 +37,3 @@ class Hospital extends Model
         return $departmentNames;
     }
 }
-

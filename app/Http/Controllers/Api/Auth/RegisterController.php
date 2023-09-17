@@ -16,10 +16,10 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            "name" => "required|string|max:50|min:3",
-            "email" => "required|email|unique:users,email",
-            "password" => [
-                "required",
+            'name' => 'required|string|max:50|min:3',
+            'email' => 'required|email|unique:users,email',
+            'password' => [
+                'required',
                 Password::min(5)->letters()
             ]
         ]);
@@ -35,14 +35,14 @@ class RegisterController extends Controller
         Mail::to($user->email)->send(new VerificationEmail($user));
 
         return response()->json([
-            "success" => true,
-            "message" => "Please check your email , you email has been verified .",
+            'success' => true,
+            'message' => 'Please check your email , you email has been verified .',
         ]);
     }
 
     public function verify($id, $hash)
     {
-        $user = User::where("id", $id)->where("email_verification_token", $hash)->first();
+        $user = User::where('id', $id)->where('email_verification_token', $hash)->first();
 
         if ($user) {
             $user->markEmailAsVerified();

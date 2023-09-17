@@ -23,23 +23,19 @@ class DoctorRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => 'required|string|max:100',
-            'phone' => 'required|string',
-            'email' => 'required|string|email|unique:users',
+            'user_id' => 'required|integer',
+            'hospital_id' => 'required|integer',
             'department' => 'required|string|max:100',
             'experience' => 'required|integer',
-            'address' => 'required|string|max:100',
             'bio' => 'nullable|string',
         ];
 
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
-            $rules['name'] = 'required|string|max:100';
-            $rules['phone'] = 'required|string';
-            $rules['email'] =  ['required', 'email', Rule::unique('doctors')->ignore($this->doctor)];
+            $rules['user_id'] = 'required|integer';
+            $rules['hospital_id'] = 'required|integer';
             $rules['department'] = 'required|string|max:100';
             $rules['experience'] = 'required|integer';
             $rules['address'] = 'required|string|max:100';
-            $rules['bio'] = 'nullable|string';
         }
 
         return $rules;
