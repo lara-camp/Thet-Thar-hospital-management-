@@ -30,7 +30,7 @@ class Hospital extends Model
         $departmentNames = [];
         foreach ($doctors as $doctor) {
             $department = $doctor->department; // Accessing the department of an individual doctor
-            if ($department) {
+            if (!in_array($department->name , $departmentNames)) {
                 $departmentNames[] = $department->name;
             }
         }
