@@ -38,7 +38,6 @@ class User extends Authenticatable
      */
     protected $hidden = [
         'remember_token',
-        'password'
     ];
 
     /**
@@ -54,5 +53,14 @@ class User extends Authenticatable
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
+    public function patient()
+    {
+        return $this->belongsTo(User::class, 'id');
     }
 }
