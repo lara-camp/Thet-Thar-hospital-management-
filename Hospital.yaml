@@ -84,6 +84,11 @@ paths:
                 password:
                   type: string
                   example: password
+            examples:
+              Example 1:
+                value:
+                  email: admin@gmail.com
+                  password: 12345678
           application/json:
             schema:
               type: object
@@ -92,6 +97,11 @@ paths:
                   type: string
                 password:
                   type: string
+            examples:
+              Example 1:
+                value:
+                  email: admin@gmail.com
+                  password: '12345678'
         description: ''
       responses:
         '200':
@@ -296,3 +306,25 @@ paths:
                   type: string
                 password:
                   type: string
+  /appointments:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses: {}
+      operationId: get-appointments
+      parameters:
+        - schema:
+            type: string
+          in: header
+          name: Accept
+          description: application/json
+        - schema:
+            type: string
+          in: header
+          name: Content-Type
+          description: application/json
+        - schema:
+            type: string
+          in: header
+          name: Authorization
+          description: Bearer  1|Hr1G5SFdNsgZutFkeYYkIh4tBsQNHp7EhNmfvswr4ce243f7
