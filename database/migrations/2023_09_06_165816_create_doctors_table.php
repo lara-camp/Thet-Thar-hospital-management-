@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->unsigned();
             $table->foreignId('hospital_id')->unsigned();
-            $table->foreignId('department_id', 100);
+            $table->foreignId('department_id');
             $table->integer('experience');
             $table->string('license', 100)->nullable();
             $table->text('bio')->nullable();
