@@ -14,7 +14,7 @@ class HospitalSeeder extends Seeder
     public function run(): void
     {
         Hospital::truncate();
-        $data = Hospital::factory(10)->make();
+        $data = Hospital::factory(100)->make();
         $chunks = $data->chunk(10);
         $chunks->each(function ($chunk) {
             Hospital::insert($chunk->toArray());

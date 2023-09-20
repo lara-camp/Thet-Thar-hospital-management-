@@ -13,7 +13,7 @@ class Hospital extends Model
 
     public function doctors()
     {
-        return $this->belongsToMany(Doctor::class, 'hospital_doctor', 'hospital_id', 'doctor_id');
+        return $this->belongsToMany(Doctor::class, 'hospital_doctors', 'hospital_id', 'doctor_id');
     }
     public function patients()
     {
@@ -22,5 +22,18 @@ class Hospital extends Model
     public function images()
     {
         return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function GetHashTagForHospital($id){
+        $hospital = Hospital::find($id);
+        $doctors = $hospital->doctors;
+        $departmentNames = [];
+        foreach ($doctors as $doctor) {
+            $department = $doctor->department; // Accessing the department of an individual doctor
+            if (!in_array($department->name , $departmentNames)) {
+                $departmentNames[] = $department->name;
+            }
+        }
+        return $departmentNames;
     }
 }

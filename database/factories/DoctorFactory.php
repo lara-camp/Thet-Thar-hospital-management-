@@ -21,6 +21,7 @@ class DoctorFactory extends Factory
             'hospital_id' => $this->faker->numberBetween(1, 10),
             'department_id' => $this->faker->numberBetween(1, 10),
             'experience' => $this->faker->numberBetween(0, 10), // Assuming experience is an integer.
+            'license'=> $this->faker->unique()->numberBetween(10000,99999),
             'bio' => $this->faker->text,
         ];
     }
