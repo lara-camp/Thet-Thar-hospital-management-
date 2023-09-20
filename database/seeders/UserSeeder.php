@@ -14,12 +14,13 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::truncate();
-        $data = User::factory(10)->make();
-        $chunks = $data->chunk(10);
-        $chunks->each(function ($chunk) {
-            User::insert($chunk->toArray());
-        });
+//        User::truncate();
+//        $data = User::factory(10)->make();
+//        $chunks = $data->chunk(10);
+//        $chunks->each(function ($chunk) {
+//            User::insert($chunk->toArray());
+//        });
+        User::factory(10)->create();
         User::insert([
             'name' => 'SuperAdmin',
             'email' => 'superadmin@gmail.com',

@@ -2,22 +2,22 @@
 
 namespace Database\Seeders;
 
-use App\Models\Hospital;
+use App\Models\Appointment;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class HospitalSeeder extends Seeder
+class AppointmentSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Hospital::truncate();
-        $data = Hospital::factory(100)->make();
-        $chunks = $data->chunk(10);
+        Appointment::truncate();
+        $data = Appointment::factory(20)->make();
+        $chunks = $data->chunk(20);
         $chunks->each(function ($chunk) {
-            Hospital::insert($chunk->toArray());
+            Appointment::insert($chunk->toArray());
         });
     }
 }

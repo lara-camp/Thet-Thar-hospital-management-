@@ -17,8 +17,18 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $guarded = [
-        'id'
+    protected $fillable = [
+        'name',
+        'password',
+        'email',
+        'phone',
+        'address',
+        'role',
+        'is_visible',
+        'email_verified_at',
+        'remember_token',
+        'created_at',
+        'updated_at',
     ];
 
     /**
@@ -39,4 +49,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
+
+    public function doctor()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
+    public function patient()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
 }
