@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('hospital_doctors', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('hospital_id');
-            $table->bigInteger('doctor_id');
-            $table->time('checkin_time')->nullable();
+            $table->foreignId('hospital_id');
+            $table->foreignId('doctor_id');
+            $table->time('checkin_time');
             $table->timestamps();
         });
     }
