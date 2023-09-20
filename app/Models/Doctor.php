@@ -23,7 +23,7 @@ class Doctor extends Model
 
     public function department()
     {
-        return $this->hasOne(Department::class,  'department_id');
+        return $this->hasOne(Department::class,  'id');
     }
 
     public function appointments()
