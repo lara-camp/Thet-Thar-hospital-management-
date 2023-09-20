@@ -28,7 +28,15 @@ class LoginLogoutController extends Controller
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 $user = auth()->user();
                 $token = $user->createToken('myapptoken');
-                return $this->success('Successfully logged in.', ['token' => $token->plainTextToken], 200);
+                return $this->success('Successfully logged in.', [
+                    'token' => $token->plainTextToken, 
+                    'user' => [
+                        'name' => $user->name,
+                        'email' => $user->email,
+                        'phone' => $user->phone,
+                        'role' => $user->role,
+                    ]
+                ], 200);
             }
 
             return $this->error('Your credentials is not correct.', null, 422);
