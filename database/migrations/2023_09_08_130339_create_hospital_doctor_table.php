@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('hospital_id');
             $table->bigInteger('doctor_id');
-            $table->time('checkin_time');
+            $table->time('checkin_time')->nullable();
             $table->timestamps();
         });
     }
