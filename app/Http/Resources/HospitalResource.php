@@ -19,7 +19,7 @@ class HospitalResource extends JsonResource
         if (!$uri) return [];
 
         // Only include companyName and companyStatus for /api/org
-        if ($uri === 'api/app/hospital/doctors/{id}') {
+        if ($uri === 'api/user/hospital/doctors/{id}') {
             return [
                 'id' => $this->id,
                 'name' => $this->name,
@@ -27,7 +27,7 @@ class HospitalResource extends JsonResource
                 'phone' => $this->phone,
                 'address' => $this->address,
                 'bio' => $this->bio,
-                'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+                'createdAt' => Carbon::parse($this->created_at)->format('Y-M-d'),
             ];
         }
         return [
@@ -38,7 +38,7 @@ class HospitalResource extends JsonResource
             'address' => $this->address,
             'bio' => $this->bio,
             'department' => $this->GetHashTagForHospital($this->id),
-            'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+            'createdAt' => Carbon::parse($this->created_at)->format('Y-M-d'),
         ];
     }
 }

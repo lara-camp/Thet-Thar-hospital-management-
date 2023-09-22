@@ -13,12 +13,11 @@ class FetchDoctorAction
     {
         $validated = request()->validate([
             'page' => 'integer',
-            'perPage' => 'integer',
+            'perPage' => 'integer'
         ]);
-        $perPage = $validated['perPage'] ?? 5;
         $page = $validated['page'] ?? 1;
+        $perPage = $validated['perPage'] ?? 6;
         $data = Doctor::paginate($perPage, ['*'], 'page',  $page)->withQueryString();
-
         $meta = $this->getPaginationMeta($data);
 
         $result = [
