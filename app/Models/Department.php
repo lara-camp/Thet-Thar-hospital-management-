@@ -13,6 +13,6 @@ class Department extends Model
 
     public function doctors()
     {
-        return $this->belongsTo(Doctor::class, 'department_id');
+        return $this->hasMany(Doctor::class, 'department_id');
     }
 }
