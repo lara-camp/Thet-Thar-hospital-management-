@@ -25,7 +25,7 @@ class DoctorRequest extends FormRequest
         $rules = [
             'user_id' => 'required|integer',
             'hospital_id' => 'required|integer',
-            'department' => 'required|string|max:100',
+            'department_id' => 'required|integer|max:100',
             'experience' => 'required|integer',
             'bio' => 'nullable|string',
         ];
@@ -33,7 +33,7 @@ class DoctorRequest extends FormRequest
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
             $rules['user_id'] = 'required|integer';
             $rules['hospital_id'] = 'required|integer';
-            $rules['department'] = 'required|string|max:100';
+            $rules['department_id'] = 'required|integer|max:100';
             $rules['experience'] = 'required|integer';
             $rules['address'] = 'required|string|max:100';
         }

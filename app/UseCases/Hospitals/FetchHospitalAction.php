@@ -17,10 +17,10 @@ class FetchHospitalAction
             'perPage' => 'integer'
         ]);
         $page = $validated['page'] ?? 1;
-        $perPage = $validated['perPage'] ?? 5;
-        $data = Hospital::when(request('keyword'), function ($q){
+        $perPage = $validated['perPage'] ?? 6;
+        $data = Hospital::when(request('keyword'), function ($q) {
             $keyword = request('keyword');
-            $q->where("name","like","%$keyword%");
+            $q->where("name", "like", "%$keyword%");
         })->paginate($perPage, ['*'], 'page', $page)->withQueryString();
         $meta = $this->getPaginationMeta($data);
         return [

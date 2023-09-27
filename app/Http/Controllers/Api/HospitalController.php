@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Hospital;
+use Illuminate\Http\Request;
+use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HospitalRequest;
+use App\Http\Resources\DoctorResource;
 use App\Http\Resources\HospitalResource;
-use App\Models\Hospital;
-use App\Traits\HttpResponses;
-use App\UseCases\Hospitals\DeleteHospitalAction;
 use App\UseCases\Hospitals\EditHospitalAction;
 use App\UseCases\Hospitals\FetchHospitalAction;
 use App\UseCases\Hospitals\StoreHospitalAction;
-use Illuminate\Http\Request;
+use App\UseCases\Hospitals\DeleteHospitalAction;
+use App\UseCases\Hospitals\FetchHospitalDoctorAction;
 
 class HospitalController extends Controller
 {
@@ -62,5 +64,14 @@ class HospitalController extends Controller
     {
         (new DeleteHospitalAction())($hospital);
         return $this->success('Hospital deleted successfully.', null);
+    }
+
+    public function hospitalDoctors($id)
+    {
+        $result = (new FetchHospitalDoctorAction())($id);
+        return $this->success('Fetched hospital doctors successfully.', [
+            'data' => DoctorResource::collection($result['data']),
+            'meta' => $result['meta']
+        ]);
     }
 }

@@ -11,6 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::disableForeignKeyConstraints();
+        Schema::enableForeignKeyConstraints();
+
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->unsigned();
@@ -19,6 +22,8 @@ return new class extends Migration
             $table->integer('experience');
             $table->string('license', 100)->nullable();
             $table->text('bio')->nullable();
+            $table->time('duty_start_time');
+            $table->time('duty_end_time');
             $table->timestamps();
         });
     }

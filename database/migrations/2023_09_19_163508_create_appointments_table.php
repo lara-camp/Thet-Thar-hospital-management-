@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('patient_id')->unsigned();
             $table->foreignId('doctor_id')->unsigned();
-            $table->dateTime('appointment_date');
+            $table->foreignId('appointment_time_id')->unsigned()->nullable();
+            $table->date('appointment_date')->default(now()->toDateString());
             $table->text('description')->nullable();
-            $table->enum('status', ['completed', 'pending', 'rejected'])->default('completed');
+            $table->enum('status', ['completed', 'pending', 'rejected', 'ongoing'])->default('completed');
             $table->enum('type', ['online', 'offline'])->default('online');
             $table->boolean('is_visible')->default(true);
             $table->timestamps();

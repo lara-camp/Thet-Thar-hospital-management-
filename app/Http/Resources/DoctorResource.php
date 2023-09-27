@@ -16,12 +16,13 @@ class DoctorResource extends JsonResource
     {
         return [
             'id'      => $this->id,
-            'name'    => $this->name,
-            'email'   => $this->email,
-            'phone'    => $this->phone,
-            'department'  => $this->department,
+            'name'    => $this->userInfo->name,
+            'email'   => $this->userInfo->email,
+            'phone'    => $this->userInfo->phone,
+            'department'  => $this->department->name,
             'experience'  => $this->experience,
-            'address'  => $this->address,
+            'address'  => $this->userInfo->address,
+            'hospital' => $this->hospitals->pluck('name'),
             'bio'  => $this->bio,
         ];
     }
