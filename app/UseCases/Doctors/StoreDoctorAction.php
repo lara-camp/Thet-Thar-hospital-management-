@@ -35,7 +35,6 @@ class StoreDoctorAction
             // Increment the appointment time by the specified interval
             $appointmentTime->addMinutes($interval);
         }
-
         return 201;
     }
 }
