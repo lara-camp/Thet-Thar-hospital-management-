@@ -20,8 +20,9 @@ class FetchHospitalAction
         $perPage = $validated['perPage'] ?? 6;
         $data = Hospital::when(request('keyword'), function ($q) {
             $keyword = request('keyword');
-            $q->where("name", "like", "%$keyword%");
-        })->paginate($perPage, ['*'], 'page', $page)->withQueryString();
+            $q->where("name","like","%$keyword%");
+        })->where("is_visible", 1)->paginate($perPage, ['*'], 'page', $page)->withQueryString();
+
         $meta = $this->getPaginationMeta($data);
         return [
             'data' => $data,

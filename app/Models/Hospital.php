@@ -19,7 +19,7 @@ class Hospital extends Model
     {
         return $this->hasMany(Patient::class, 'hospital_id');
     }
-    public function images()
+    public function image()
     {
         return $this->morphMany(Image::class, 'imageable');
     }

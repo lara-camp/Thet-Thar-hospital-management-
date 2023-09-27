@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\Auth\ForgotPasswordController;
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\HospitalController;
 use App\Http\Controllers\Api\PatientController;
+use App\Http\Controllers\Api\ImageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/departments', [DepartmentController::class, 'departments']);
     Route::get('/hospital/{hospitalId}/doctors', [HospitalController::class, 'hospitalDoctors']);
     Route::get('/search-hospitals-by-department', [DepartmentController::class, 'searchHospitalByDepartment']);
+    Route::post('/image-upload',[ImageController::class , 'store']);
+    Route::delete('/image-upload/{id}',[ImageController::class , 'delete']);
 });
 
 

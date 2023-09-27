@@ -11,9 +11,9 @@ class DeleteHospitalAction
     use HttpResponses;
     public function __invoke($hospital): int
     {
-        $deleteData = Hospital::where('id', $hospital->user_id)->firstOrFail();
+        $deleteData = Hospital::where('id', $hospital->id)->firstOrFail();
         $deleteData->update([
-            'is_visible' => false,
+            'is_visible' => 0,
         ]);
         return 200;
     }
