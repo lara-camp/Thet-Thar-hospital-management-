@@ -25,17 +25,17 @@ class DoctorRequest extends FormRequest
         $rules = [
             'user_id' => 'required|integer',
             'hospital_id' => 'required|integer',
-            'department_id' => 'required|string|max:100',
+            'department_id' => 'required|integer|max:100',
             'experience' => 'required|integer',
             'bio' => 'nullable|string',
         ];
 
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
-            $rules['user_id'] = 'nullable|integer';
-            $rules['hospital_id'] = 'nullable|integer';
-            $rules['department_id'] = 'nullable|string|max:100';
-            $rules['experience'] = 'nullable|integer';
-            $rules['address'] = 'nullable|string|max:100';
+            $rules['user_id'] = 'required|integer';
+            $rules['hospital_id'] = 'required|integer';
+            $rules['department_id'] = 'required|integer|max:100';
+            $rules['experience'] = 'required|integer';
+            $rules['address'] = 'required|string|max:100';
         }
 
         return $rules;
