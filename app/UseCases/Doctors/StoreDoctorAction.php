@@ -9,11 +9,11 @@ class StoreDoctorAction
 {
     public function __invoke($formData): int
     {
-        $fileName = FileHelper::fileMover($formData['image']);
+//        $fileName = FileHelper::fileMover($formData['image']);
         $doctor = Doctor::create($formData);
-        $doctor->images()->create([
-            'url' =>  config('folderName') . '/' . $fileName, // Adjust the path as needed
-        ]);
+//        $doctor->images()->create([
+//            'url' =>  config('folderName') . '/' . $fileName, // Adjust the path as needed
+//        ]);
         return 201;
     }
 }
