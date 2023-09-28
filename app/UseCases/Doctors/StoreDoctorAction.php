@@ -4,12 +4,19 @@ namespace App\UseCases\Doctors;
 
 use App\Models\Doctor;
 use App\Helpers\FileHelper;
+use App\Models\HospitalDoctor;
 
 class StoreDoctorAction
 {
     public function __invoke($formData): int
     {
         $doctor = Doctor::create($formData);
+
+        $pivot = HospitalDoctor::create([
+            'hospital_id' => $formData['hospital_id'],
+            'doctor_id' => $doctor->id,
+            'checkin_time' => $formData['duty_start_time'],
+        ]);
 
         if (request()->has('image')) {
             $fileName = FileHelper::fileMover($formData['image']);

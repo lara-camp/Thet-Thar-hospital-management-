@@ -32,6 +32,7 @@ class DoctorController extends Controller
      */
     public function store(DoctorRequest $request)
     {
+
         (new StoreDoctorAction)($request->all());
         return $this->success('Successfully inserted.', null, 201);
     }
