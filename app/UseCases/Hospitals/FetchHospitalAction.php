@@ -16,7 +16,7 @@ class FetchHospitalAction
             'perPage' => 'integer'
         ]);
         $page = $validated['page'] ?? 1;
-        $perPage = $validated['perPage'] ?? 5;
+        $perPage = $validated['perPage'] ?? 8;
         $data = Hospital::paginate($perPage, ['*'], 'page', $page)->withQueryString();
         $meta = $this->getPaginationMeta($data);
         return [

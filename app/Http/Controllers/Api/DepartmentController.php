@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
-use App\Models\Department;
 use App\Models\Doctor;
-use App\Traits\HttpResponses;
+use App\Models\Department;
 use Illuminate\Http\Request;
+use App\Traits\HttpResponses;
+use Illuminate\Support\Collection;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\HospitalResource;
 
 class DepartmentController extends Controller
 {
@@ -19,12 +21,16 @@ class DepartmentController extends Controller
 
     public function searchHospitalByDepartment(Request $request)
     {
-        $doctors = Doctor::where('id', 2)->get();
+        
+        $doctors = new Collection([]);
         $departments = Department::with('doctors')->where('name', 'LIKE', '%'. $request->department .'%')->get();
         foreach($departments as $department) {
-            $doctors->merge($department->doctors);
+            $doctors = $doctors->merge($department->doctors);
         }
-        return $doctors;
-        return $this->success('Fetched hospitals by department.', ['hospitals' => $departments]);
+        $hospitals = new Collection([]);
+        foreach($doctors as $doctor){
+            $hospitals = $hospitals->merge($doctor->hospitals);
+        }
+        return $this->success('Fetched hospitals by department.', ['hospitals' => HospitalResource::collection($hospitals->unique('id'))]);
     }
 }
