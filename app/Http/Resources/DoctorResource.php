@@ -24,6 +24,8 @@ class DoctorResource extends JsonResource
             'experience'  => $this->experience,
             'address'  => $this->userInfo->address,
             'hospital' => $this->hospitals->pluck('name'),
+            'duty_start_time' => $this->duty_start_time,
+            'duty_end_time' => $this->duty_end_time,
             'bio'  => $this->bio,
             'image' => $this->images,
             'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),

@@ -27,7 +27,7 @@ class Doctor extends Model
 
     public function department()
     {
-        return $this->hasOne(Department::class,  'id');
+        return $this->belongsTo(Department::class,  'department_id');
     }
 
     public function appointments()
