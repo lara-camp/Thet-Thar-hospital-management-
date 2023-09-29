@@ -5,6 +5,7 @@ namespace App\UseCases\Doctors;
 use App\Models\Doctor;
 use App\Helpers\FileHelper;
 use App\Models\HospitalDoctor;
+use Carbon\Carbon;
 
 class StoreDoctorAction
 {
@@ -25,8 +26,8 @@ class StoreDoctorAction
             ]);
         }
         // Create appointment times based on duty start and end times
-        $dutyStartTime = \Carbon\Carbon::parse($formData['duty_start_time']); // Assuming 'duty_start_time' is in a valid time format
-        $dutyEndTime = \Carbon\Carbon::parse($formData['duty_end_time']); // Assuming 'duty_end_time' is in a valid time format
+        $dutyStartTime = Carbon::parse($formData['duty_start_time']); // Assuming 'duty_start_time' is in a valid time format
+        $dutyEndTime = Carbon::parse($formData['duty_end_time']); // Assuming 'duty_end_time' is in a valid time format
 
         $interval = 30; // 30 minutes interval, you can adjust this as needed
         $appointmentTime = $dutyStartTime->copy();

@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentRequest;
 use App\Http\Resources\AppointmentResource;
-use App\Models\Appointment;
-use App\UseCases\Appointments\DeleteAppointmentAction;
+use App\UseCases\Doctors\CheckAppointmentAction;
 use App\UseCases\Appointments\EditAppointmentAction;
 use App\UseCases\Appointments\FetchAppointmentAction;
 use App\UseCases\Appointments\StoreAppointmentAction;
+use App\UseCases\Appointments\DeleteAppointmentAction;
 
 class AppointmentController extends Controller
 {
@@ -60,5 +61,13 @@ class AppointmentController extends Controller
     {
         (new DeleteAppointmentAction)($appointment);
         return $this->success('Successfully Deleted', null);
+    }
+
+    public function checkAppointment(Request $request)
+    {
+        $formData = $request->all();
+        $result = (new CheckAppointmentAction)($formData);
+
+        return $this->success($result['msg'], $result['booking_id']);
     }
 }
