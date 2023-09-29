@@ -19,6 +19,7 @@ class AppointmentFactory extends Factory
         return [
             'patient_id' =>  $this->faker->numberBetween(1, 10),
             'doctor_id' =>  $this->faker->numberBetween(1, 10),
+            'booking_id' => $this->faker->unique()->bothify('Hello ##??'),
             'appointment_time' => $this->faker->time(),
             'appointment_date' => $this->faker->date(),
             'description' => $this->faker->text(),

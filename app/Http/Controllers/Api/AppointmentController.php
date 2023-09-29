@@ -68,6 +68,6 @@ class AppointmentController extends Controller
         $formData = $request->all();
         $result = (new CheckAppointmentAction)($formData);
 
-        return $this->success($result);
+        return $this->success($result['msg'], $result['booking_id']);
     }
 }
