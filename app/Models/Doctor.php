@@ -11,8 +11,9 @@ class Doctor extends Model
 
     protected $guarded = ['id'];
 
-    public function images(){
-        return $this->morphOne(Image::class , 'imageable');
+    public function images()
+    {
+        return $this->morphOne(Image::class, 'imageable');
     }
 
     public function patients()

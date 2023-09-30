@@ -20,7 +20,6 @@ class AppointmentResource extends JsonResource
             'doctorName'   => $this->doctor->userInfo->name,
             'bookingId' => $this->booking_id,
             'doctorLocation' => $this->doctor->hospitals->pluck('location'),
-            'department' => $this->doctor->department->name,
             'appointmentTime'    => $this->appointment_time,
             'appointmentDate'    => $this->appointment_date,
             'is_visible'  => $this->is_visible,
