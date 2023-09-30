@@ -1,7 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\PatientController;
+use App\Http\Controllers\Api\HospitalController;
+use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginLogoutController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
@@ -23,16 +27,16 @@ use App\Http\Controllers\Api\PatientController;
 Route::post('/login', [LoginLogoutController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LoginLogoutController::class, 'logout']);
-    //ADD MORE ROUTES HERE
-
+    Route::apiResource('/users', UserController::class);
+    Route::apiResource('/hospitals', HospitalController::class);
+    Route::apiResource('/doctors', DoctorController::class);
+    Route::apiResource('/patients', PatientController::class);
+    Route::apiResource('/appointments', AppointmentController::class);
 });
-Route::apiResource('/hospitals', HospitalController::class);
-Route::apiResource('/doctors', DoctorController::class);
-Route::apiResource('/patients', PatientController::class);
 
 Route::get('/departments', [DepartmentController::class, 'departments']);
 Route::get('/search-hospitals-by-department', [DepartmentController::class, 'searchHospitalByDepartment']);
 
 Route::post('/password/email',  [ForgotPasswordController::class, 'sendResetMail']);
 Route::post('/password/reset', [ForgotPasswordController::class, 'resetNewPassword']);
-Route::post("/register", [RegisterController::class, "Register"])->middleware("throttle:60,1");
+Route::post('/register', [RegisterController::class, 'register']);

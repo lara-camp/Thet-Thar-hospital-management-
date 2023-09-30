@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('doctors', function (Blueprint $table) {
+        Schema::create('images', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->unsigned();
-            $table->foreignId('hospital_id')->unsigned();
-            $table->foreignId('department_id');
-            $table->integer('experience');
-            $table->string('license', 100)->nullable();
-            $table->text('bio')->nullable();
+            $table->unsignedBigInteger('imageable_id');
+            $table->string('imageable_type');
+            $table->string('url');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('doctors');
+        Schema::dropIfExists('images');
     }
 };

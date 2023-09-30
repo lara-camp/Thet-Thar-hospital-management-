@@ -24,8 +24,8 @@ class PatientController extends Controller
     {
         $result = (new FetchPatientAction)();
         return response()->json([
-            "data" => PatientResource::collection($result['data']),
-            "meta" => $result['meta'],
+            'data' => PatientResource::collection($result['data']),
+            'meta' => $result['meta'],
         ]);
     }
 
@@ -34,7 +34,7 @@ class PatientController extends Controller
      */
     public function show(Patient $patient)
     {
-        return $this->success("Data fetched successfully.", $patient);
+        return $this->success('Data fetched successfully.', $patient);
     }
 
     /**
@@ -42,8 +42,8 @@ class PatientController extends Controller
      */
     public function update(PatientRequest $request, Patient $patient)
     {
-        $patient = (new EditPatientAction)($request->all() , $patient);
-        return $this->success("Successfully updated.",$patient);
+        $patient = (new EditPatientAction)($request->all(), $patient);
+        return $this->success('Successfully updated.', $patient);
     }
 
     /**
@@ -52,6 +52,6 @@ class PatientController extends Controller
     public function destroy(Patient $patient)
     {
         (new DeletePatientAction)($patient);
-        return $this->success("Successfully Deleted", null);
+        return $this->success('Successfully Deleted', null);
     }
 }

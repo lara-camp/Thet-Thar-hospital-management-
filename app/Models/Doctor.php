@@ -23,6 +23,16 @@ class Doctor extends Model
 
     public function department()
     {
-        return $this->hasOne(Department::class,  'department_id');
+        return $this->hasOne(Department::class,  'id');
+    }
+
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class, 'doctor_id');
+    }
+
+    public function userInfo()
+    {
+        return $this->hasOne(User::class, 'id');
     }
 }

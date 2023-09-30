@@ -23,7 +23,7 @@ class HospitalController extends Controller
     {
         $result = (new FetchHospitalAction())();
         return $this->success('Fetched hospitals successfully.', [
-            'hospitals' => HospitalResource::collection($result['data']),
+            'data' => HospitalResource::collection($result['data']),
             'meta' => $result['meta']
         ]);
     }
@@ -42,7 +42,7 @@ class HospitalController extends Controller
      */
     public function show(Hospital $hospital)
     {
-        return $this->success('Fetched hospital successfully.', ['hospital' => new HospitalResource($hospital)]);
+        return $this->success('Fetched hospital successfully.', ['data' => new HospitalResource($hospital)]);
     }
 
     /**
@@ -52,7 +52,7 @@ class HospitalController extends Controller
     {
         // return $request->all();
         $hospital = (new EditHospitalAction())($request->all(), $hospital);
-        return $this->success('Updated hospital successfully.', ['hospital' => new HospitalResource($hospital)]);
+        return $this->success('Updated hospital successfully.', ['data' => new HospitalResource($hospital)]);
     }
 
     /**

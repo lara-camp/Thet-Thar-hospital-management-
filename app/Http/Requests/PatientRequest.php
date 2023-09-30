@@ -23,17 +23,14 @@ class PatientRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'name' => 'required|string|min:2|max:100',
-            'email' => 'required|email|string|unique:users',
-            'phone' => 'required|integer',
-            'address' => 'required|string|max:100'
+            'user_id' => 'required|integer',
+            'hospital_id' => 'required|integer',
+
         ];
 
-        if ($this->isMethod("PUT") || $this->isMethod("PATCH")) {
-            $rules['name'] = 'required|string|min:2|max:100';
-            $rules['email'] = ['required', "email", Rule::unique("patients")->ignore($this->patient)];
-            $rules['phone'] = "required|integer";
-            $rules['address'] = "required|string|max:100";
+        if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
+            $rules['user_id'] = 'required|integer';
+            $rules['hospital_id'] = 'required|integer';
         }
 
         return $rules;

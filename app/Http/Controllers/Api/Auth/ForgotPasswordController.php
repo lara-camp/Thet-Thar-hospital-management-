@@ -9,7 +9,7 @@ use App\Mail\SendCodeResetPassword;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
 
-class ForgotPasswordController extends Controller
+class  ForgotPasswordController extends Controller
 {
     public function sendResetMail(Request $request)
     {

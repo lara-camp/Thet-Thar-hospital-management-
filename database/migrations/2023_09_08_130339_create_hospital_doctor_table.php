@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('hospital_doctor', function (Blueprint $table) {
+        Schema::create('hospital_doctors', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('hospital_id');
-            $table->bigInteger('doctor_id');
+            $table->foreignId('hospital_id');
+            $table->foreignId('doctor_id');
             $table->time('checkin_time');
             $table->timestamps();
         });

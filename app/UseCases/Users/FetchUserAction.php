@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\UseCases\Hospitals;
+namespace App\UseCases\Users;
 
-use App\Models\Hospital;
+use App\Models\User;
 use App\Traits\HttpResponses;
 
-class FetchHospitalAction
+class FetchUserAction
 {
     use HttpResponses;
 
@@ -18,10 +18,7 @@ class FetchHospitalAction
         ]);
         $page = $validated['page'] ?? 1;
         $perPage = $validated['perPage'] ?? 5;
-        $data = Hospital::when(request('keyword'), function ($q){
-            $keyword = request('keyword');
-            $q->where("name","like","%$keyword%");
-        })->paginate($perPage, ['*'], 'page', $page)->withQueryString();
+        $data = User::paginate($perPage, ['*'], 'page', $page)->withQueryString();
         $meta = $this->getPaginationMeta($data);
         return [
             'data' => $data,
