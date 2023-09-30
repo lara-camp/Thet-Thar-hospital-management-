@@ -2,11 +2,10 @@
 
 namespace App\Http\Resources;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class DepartmentResource extends JsonResource
+class AppointmentTimeResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,7 +16,7 @@ class DepartmentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
+            'appointmentTime' => $this->appointment_time
         ];
     }
 }

@@ -19,21 +19,31 @@ class Hospital extends Model
     {
         return $this->hasMany(Patient::class, 'hospital_id');
     }
-    public function images()
+    public function image()
     {
         return $this->morphMany(Image::class, 'imageable');
     }
 
-    public function GetHashTagForHospital($id){
+    public function GetHashTagForHospital($id)
+    {
         $hospital = Hospital::find($id);
         $doctors = $hospital->doctors;
         $departmentNames = [];
         foreach ($doctors as $doctor) {
             $department = $doctor->department; // Accessing the department of an individual doctor
-            if (!in_array($department->name , $departmentNames)) {
+            if (!in_array($department->name, $departmentNames)) {
                 $departmentNames[] = $department->name;
             }
         }
+
         return $departmentNames;
+    }
+
+    public function getDoctorsOfHospital($id)
+    {
+        $hospital = Hospital::find($id);
+        $doctors = $hospital->doctors;
+
+        return $doctors;
     }
 }

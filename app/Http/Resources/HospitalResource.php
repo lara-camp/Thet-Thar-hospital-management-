@@ -15,15 +15,34 @@ class HospitalResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $uri = $request->route()?->uri;
+        if (!$uri) return [];
+
+        // Only include companyName and companyStatus for /api/org
+        if ($uri === 'api/user/hospital/doctors/{id}') {
+            return [
+                'id' => $this->id,
+                'name' => $this->name,
+                'email' => $this->email,
+                'phone' => $this->phone,
+                'address' => $this->address,
+                'location' => $this->location,
+                'bio' => $this->bio,
+                'createdAt' => Carbon::parse($this->created_at)->format('Y-M-d'),
+            ];
+        }
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
             'address' => $this->address,
+            'location' => $this->location,
             'bio' => $this->bio,
-            'department'=>$this->GetHashTagForHospital($this->id),
-            'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+            'image' => $this->image,
+            'department' => $this->GetHashTagForHospital($this->id),
+            'createdAt' => Carbon::parse($this->created_at)->format('Y-M-d'),
         ];
     }
 }

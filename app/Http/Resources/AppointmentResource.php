@@ -16,14 +16,16 @@ class AppointmentResource extends JsonResource
     {
         return [
             'id'      => $this->id,
-            'patientName'    => $this->patient->userInfo->name,
-            'doctorName'   => $this->doctor->userInfo->name,
-            'department' => $this->doctor->department->name,
-            'appointmentDate'    => $this->appointment_date,
-            'is_visible'  => $this->is_visible,
-            'description'  => $this->description,
-            'status'  => $this->status,
-            'type'  => $this->type,
+            'patientName'    => $this->patient->userInfo->name ?? null,
+            'doctorName'   => $this->doctor->userInfo->name ?? null,
+            'bookingId' => $this->booking_id ?? null,
+            'doctorLocation' => $this->doctor->hospitals->pluck('location') ?? null,
+            'appointmentTime'    => $this->appointment_time ?? null,
+            'appointmentDate'    => $this->appointment_date ?? null,
+            'is_visible'  => $this->is_visible ?? null,
+            'description'  => $this->description ?? null,
+            'status'  => $this->status ?? null,
+            'appointmentType'  => $this->appointment_type ?? null,
         ];
     }
 }

@@ -11,6 +11,11 @@ class Doctor extends Model
 
     protected $guarded = ['id'];
 
+    public function images()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
     public function patients()
     {
         return $this->belongsToMany(Patient::class, 'doctor_patient');
@@ -18,7 +23,7 @@ class Doctor extends Model
 
     public function hospitals()
     {
-        return $this->belongsToMany(Hospital::class, 'hospital_doctor', 'doctor_id', 'hospital_id');
+        return $this->belongsToMany(Hospital::class, 'hospital_doctors', 'doctor_id', 'hospital_id');
     }
 
     public function department()
@@ -33,6 +38,11 @@ class Doctor extends Model
 
     public function userInfo()
     {
-        return $this->hasOne(User::class, 'id');
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function appointmentTimes()
+    {
+        return $this->hasMany(AppointmentTime::class, 'doctor_id');
     }
 }

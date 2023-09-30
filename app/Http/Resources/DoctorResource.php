@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -16,13 +17,16 @@ class DoctorResource extends JsonResource
     {
         return [
             'id'      => $this->id,
-            'name'    => $this->name,
-            'email'   => $this->email,
-            'phone'    => $this->phone,
-            'department'  => $this->department,
-            'experience'  => $this->experience,
-            'address'  => $this->address,
+            'name'    => $this->userInfo->name ?? null,
+            'email'   => $this->userInfo->email ?? null,
+            'phone'    => $this->userInfo->phone ?? null,
+            'department'  => $this->department->name ?? null,
+            'experience'  => $this->experience ?? null,
+            'address'  => $this->userInfo->address ?? null,
+            'hospital' => $this->hospitals->pluck('name') ?? null,
             'bio'  => $this->bio,
+            'image' => $this->images,
+            'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
         ];
     }
 }

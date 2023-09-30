@@ -33,13 +33,13 @@ class UserRequest extends FormRequest
         ];
 
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
-            $rules['name'] = 'required|string|max:100';
-            $rules['email'] = 'required|email|unique:users,email,' . $this->user->id;
+            $rules['name'] = 'nullable|string|max:100';
+            $rules['email'] = 'nullable|email|unique:users,email,' . $this->user->id;
             $rules['password'] = 'nullable|string|min:8|Password::min(8)->letters()';
-            $rules['phone'] = 'required|string|max:100';
-            $rules['address'] = 'required|string|max:100';
-            $rules['role'] = 'required|string|max:100';
-            $rules['is_visible'] = 'required|boolean';
+            $rules['phone'] = 'nullable|string|max:100';
+            $rules['address'] = 'nullable|string|max:100';
+            $rules['role'] = 'nullable|string|max:100';
+            $rules['is_visible'] = 'nullable|boolean';
             $rules['email_verified_at'] = 'nullable|date';
         }
 

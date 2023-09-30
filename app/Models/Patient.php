@@ -20,6 +20,6 @@ class Patient extends Model
     }
     public function userInfo()
     {
-        return $this->hasOne(User::class, 'id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }
