@@ -8,8 +8,10 @@ use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AppointmentRequest;
 use App\Http\Resources\AppointmentResource;
+use App\Http\Resources\AppointmentTimeResource;
 use App\UseCases\Doctors\CheckAppointmentAction;
 use App\UseCases\Appointments\EditAppointmentAction;
+use App\UseCases\Doctors\FetchAppointmentTimeAction;
 use App\UseCases\Appointments\FetchAppointmentAction;
 use App\UseCases\Appointments\StoreAppointmentAction;
 use App\UseCases\Appointments\DeleteAppointmentAction;
@@ -69,5 +71,13 @@ class AppointmentController extends Controller
         $result = (new CheckAppointmentAction)($formData);
 
         return $this->success($result['msg'], $result['booking_id']);
+    }
+
+    public function appointmentsTime($doctorId)
+    {
+        $result = (new FetchAppointmentTimeAction)($doctorId);
+        return response()->json([
+            'data' => AppointmentTimeResource::collection($result)
+        ]);
     }
 }

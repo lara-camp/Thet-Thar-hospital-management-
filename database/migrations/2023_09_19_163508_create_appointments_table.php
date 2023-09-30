@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('appointment_date')->default(now()->toDateString());
             $table->text('description')->nullable();
             $table->enum('status', ['completed', 'cancel', 'upcoming'])->default('upcoming');
-            $table->enum('type', ['online', 'offline'])->default('online');
+            $table->enum('appointment_type', ['outpatient', 'chat', 'video'])->nullable();
             $table->boolean('is_visible')->default(true);
             $table->timestamps();
         });

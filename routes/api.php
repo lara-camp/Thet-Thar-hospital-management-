@@ -35,8 +35,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/hospital/{hospitalId}/doctors', [HospitalController::class, 'hospitalDoctors']);
     Route::get('/search-hospitals-by-department', [DepartmentController::class, 'searchHospitalByDepartment']);
     Route::post('/check-appointment', [AppointmentController::class, 'checkAppointment']);
-    Route::post('/image-upload',[ImageController::class , 'store']);
-    Route::delete('/image-upload/{id}',[ImageController::class , 'delete']);
+    Route::get('/{doctorId}/appointments', [AppointmentController::class, 'appointmentsTime']);
+    Route::post('/image-upload', [ImageController::class, 'store']);
+    Route::delete('/image-upload/{id}', [ImageController::class, 'delete']);
 });
 
 

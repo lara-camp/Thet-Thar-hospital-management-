@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Validator;
 class LoginLogoutController extends Controller
 {
     use HttpResponses;
-    
+
     public function login(Request $request)
     {
         try {
@@ -29,8 +29,9 @@ class LoginLogoutController extends Controller
                 $user = auth()->user();
                 $token = $user->createToken('myapptoken');
                 return $this->success('Successfully logged in.', [
-                    'token' => $token->plainTextToken, 
+                    'token' => $token->plainTextToken,
                     'user' => [
+                        'id' => $user->id,
                         'name' => $user->name,
                         'email' => $user->email,
                         'phone' => $user->phone,
