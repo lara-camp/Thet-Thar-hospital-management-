@@ -27,6 +27,9 @@ class DoctorRequest extends FormRequest
             'hospital_id' => 'required|integer',
             'department_id' => 'required|integer|max:100',
             'experience' => 'required|integer',
+            'license' => 'required',
+            'duty_start_time' => 'required|date_format:H:i',
+            'duty_end_time' => 'required|date_format:H:i|after:duty_start_time',
             'bio' => 'nullable|string',
         ];
 

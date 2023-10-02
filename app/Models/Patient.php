@@ -22,4 +22,8 @@ class Patient extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+    public function hospital()
+    {
+        return $this->belongsTo(Hospital::class , 'hospital_id');
+    }
 }
