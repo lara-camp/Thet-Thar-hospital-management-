@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DepartmentResource;
 use App\Models\Department;
@@ -11,6 +10,10 @@ use App\UseCases\Department\DeleteDepartmentAction;
 use App\UseCases\Department\StoreDepartmentAction;
 use App\UseCases\Department\UpdateDepartmentAction;
 use Illuminate\Http\Request;
+use App\Traits\HttpResponses;
+use Illuminate\Support\Collection;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\HospitalResource;
 
 class DepartmentController extends Controller
 {
@@ -47,9 +50,16 @@ class DepartmentController extends Controller
 
     public function searchHospitalByDepartment(Request $request)
     {
-        $department = $request->department;
-        $hospitals = Department::where('name', 'LIKE', '%'. $department .'%')->first();
-
-        return $this->success('Fetched hospitals by department.', ['hospitals' => $hospitals->doctors]);
+        
+        $doctors = new Collection([]);
+        $departments = Department::with('doctors')->where('name', 'LIKE', '%'. $request->department .'%')->get();
+        foreach($departments as $department) {
+            $doctors = $doctors->merge($department->doctors);
+        }
+        $hospitals = new Collection([]);
+        foreach($doctors as $doctor){
+            $hospitals = $hospitals->merge($doctor->hospitals);
+        }
+        return $this->success('Fetched hospitals by department.', ['hospitals' => HospitalResource::collection($hospitals->unique('id'))]);
     }
 }

@@ -31,6 +31,7 @@ class HospitalResource extends JsonResource
                 'createdAt' => Carbon::parse($this->created_at)->format('Y-M-d'),
             ];
         }
+
         return [
             'id' => $this->id,
             'name' => $this->name,

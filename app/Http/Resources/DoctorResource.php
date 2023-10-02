@@ -17,17 +17,17 @@ class DoctorResource extends JsonResource
     {
         return [
             'id'      => $this->id,
-            'name'    => $this->userInfo->name,
-            'email'   => $this->userInfo->email,
-            'phone'    => $this->userInfo->phone,
-            'department'  => $this->department->name,
-            'experience'  => $this->experience,
-            'address'  => $this->userInfo->address,
-            'hospital' => $this->hospitals->pluck('name'),
-            'duty_start_time' => $this->duty_start_time,
-            'duty_end_time' => $this->duty_end_time,
-            'bio'  => $this->bio,
-            'image' => $this->images,
+            'name'    => $this->userInfo->name ?? null,
+            'email'   => $this->userInfo->email ?? null,
+            'phone'    => $this->userInfo->phone ?? null,
+            'department'  => $this->department->name ?? null,
+            'experience'  => $this->experience ?? null,
+            'address'  => $this->userInfo->address ?? null,
+            'hospital' => $this->hospitals->pluck('name') ?? null,
+            'duty_start_time' => $this->duty_start_time ?? null,
+            'duty_end_time' => $this->duty_end_time ?? null,
+            'bio'  => $this->bio ?? null,
+            'image' => $this->images ?? null,
             'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
         ];
     }
