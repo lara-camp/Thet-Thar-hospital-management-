@@ -16,9 +16,10 @@ class PatientResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'email' => $this->email,
-            'phone' => $this->phone,
+            'name' => $this->userInfo->name,
+            'email' => $this->userInfo->email,
+            'phone' => $this->userInfo->phone,
+            'hospital' => $this->hospital->name,
             'date' => $this->created_at,
         ];
     }
