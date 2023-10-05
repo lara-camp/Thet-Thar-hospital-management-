@@ -18,3 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get("/email/verify/{id}/{hash}", [RegisterController::class, "verify"])->name("verify.email");
+Route::get('/broadcast', function () {
+    event(new \Factum\Events\TestEvent('Sent from my Laravel application'));
+
+    return 'ok';
+});
