@@ -36,7 +36,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/departments/{department}', [DepartmentController::class, 'update']);
     Route::delete('/departments/{department}', [DepartmentController::class, 'delete']);
     Route::get('/hospital/{hospitalId}/doctors', [HospitalController::class, 'hospitalDoctors']);
-    Route::get('/dashboard/hospital/{hospitalId}/doctors', [HospitalController::class, 'hospitalDoctors']);
     Route::get('/search-hospitals-by-department', [DepartmentController::class, 'searchHospitalByDepartment']);
     Route::post('/check-appointment', [AppointmentController::class, 'checkAppointment']);
     Route::get('/{doctorId}/appointments', [AppointmentController::class, 'appointmentsTime']);

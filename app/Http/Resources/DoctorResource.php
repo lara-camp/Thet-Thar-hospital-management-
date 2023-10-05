@@ -15,24 +15,6 @@ class DoctorResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $uri = $request->route()->uri;
-        if (!$uri) return [];
-        // Only include companyName and companyStatus for /api/org
-        if ($uri === 'api/dashboard/hospital/{hospitalId}/doctors') {
-            return [
-                'id'      => $this->id,
-                'doctorInfo'    => new UserResource($this->userInfo),
-                'department'  => $this->department->name ?? null,
-                'experience'  => $this->experience ?? null,
-                'address'  => $this->userInfo->address ?? null,
-                'duty_start_time' => $this->duty_start_time ?? null,
-                'duty_end_time' => $this->duty_end_time ?? null,
-                'bio'  => $this->bio ?? null,
-                'image' => $this->images ?? null,
-                'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
-            ];
-        }
-
         return [
             'id'      => $this->id,
             'name'    => $this->userInfo->name ?? null,
