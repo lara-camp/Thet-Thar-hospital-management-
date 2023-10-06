@@ -42,6 +42,12 @@ class StoreDoctorAction
             // Increment the appointment time by the specified interval
             $appointmentTime->addMinutes($interval);
         }
+
+        $doctor->userInfo->update(
+            [
+                'role' => 'doctor',
+            ]
+        );
         return 201;
     }
 }

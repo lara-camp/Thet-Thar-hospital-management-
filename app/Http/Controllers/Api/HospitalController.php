@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Hospital;
-use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HospitalRequest;
@@ -13,7 +12,10 @@ use App\UseCases\Hospitals\EditHospitalAction;
 use App\UseCases\Hospitals\FetchHospitalAction;
 use App\UseCases\Hospitals\StoreHospitalAction;
 use App\UseCases\Hospitals\DeleteHospitalAction;
+use App\UseCases\Hospitals\FetchDashboardDataAction;
+use App\UseCases\Hospitals\FetchHospitalAdminAction;
 use App\UseCases\Hospitals\FetchHospitalDoctorAction;
+use App\UseCases\Hospitals\UpdateHospitalAdminAction;
 
 class HospitalController extends Controller
 {
@@ -24,7 +26,7 @@ class HospitalController extends Controller
     public function index()
     {
         $result = (new FetchHospitalAction())();
-        return $this->success('Fetched hospitals successfully.', [
+        return response()->json([
             'data' => HospitalResource::collection($result['data']),
             'meta' => $result['meta']
         ]);
@@ -44,7 +46,7 @@ class HospitalController extends Controller
      */
     public function show(Hospital $hospital)
     {
-        return $this->success('Fetched hospital successfully.', ['data' => new HospitalResource($hospital)]);
+        return $this->success('Fetched hospital successfully.', new HospitalResource($hospital));
     }
 
     /**
@@ -52,14 +54,10 @@ class HospitalController extends Controller
      */
     public function update(HospitalRequest $request, Hospital $hospital)
     {
-        // return $request->all();
         $hospital = (new EditHospitalAction())($request->all(), $hospital);
-        return $this->success('Updated hospital successfully.', ['data' => new HospitalResource($hospital)]);
+        return $this->success('Updated hospital successfully.',  new HospitalResource($hospital));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Hospital $hospital)
     {
         (new DeleteHospitalAction())($hospital);
@@ -69,9 +67,31 @@ class HospitalController extends Controller
     public function hospitalDoctors($id)
     {
         $result = (new FetchHospitalDoctorAction())($id);
-        return $this->success('Fetched hospital doctors successfully.', [
+        return response()->json([
             'data' => DoctorResource::collection($result['data']),
             'meta' => $result['meta']
         ]);
+    }
+
+    public function dashboardData($id)
+    {
+        $result = (new FetchDashboardDataAction())($id);
+        return response()->json([
+            'data' => $result
+        ]);
+    }
+
+    public function headInfo($hospitalId)
+    {
+        $result = (new FetchHospitalAdminAction)($hospitalId);
+        return response()->json([
+            'data' => $result
+        ]);
+    }
+
+    public function updateHead(Hospital $hospitalId)
+    {
+        (new UpdateHospitalAdminAction)($hospitalId);
+        return $this->success('Updated hospital head successfully.', null);
     }
 }

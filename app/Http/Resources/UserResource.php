@@ -15,6 +15,37 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $uri = $request->route()->uri;
+        if (!$uri) return [];
+
+
+        // Only include companyName and companyStatus for /api/org
+        if ($uri === 'api/dashboard/hospital/{id}/doctors') {
+            return [
+                'id'      => $this->id,
+                'name'    => $this->name,
+                'email' => $this->email,
+                'phone' => $this->phone,
+                'role' => $this->role,
+                'address' => $this->address,
+            ];
+        }
+
+        if ($uri === 'api/dashboard/{hospitalId}/head/assign') {
+            return [
+                'id'      => $this->id,
+                'name'    => $this->name,
+            ];
+        }
+
+        if ($uri === 'api/dashboard/hospital/{id}') {
+            return [
+                'id'      => $this->id,
+                'name'    => $this->name,
+                'email' => $this->email,
+                'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d'),
+            ];
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,

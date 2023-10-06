@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('bio')->nullable();
             $table->time('duty_start_time');
             $table->time('duty_end_time');
+            $table->boolean('is_visible')->default(true);
             $table->timestamps();
         });
     }
