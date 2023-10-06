@@ -17,7 +17,7 @@ class DoctorResource extends JsonResource
     {
         $uri = $request->route()->uri;
         if (!$uri) return [];
-        // Only include companyName and companyStatus for /api/org
+
         if ($uri === 'api/dashboard/hospital/{hospitalId}/doctors') {
             return [
                 'id'      => $this->id,
