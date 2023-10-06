@@ -30,6 +30,22 @@ class UserResource extends JsonResource
                 'address' => $this->address,
             ];
         }
+
+        if ($uri === 'api/dashboard/{hospitalId}/head/assign') {
+            return [
+                'id'      => $this->id,
+                'name'    => $this->name,
+            ];
+        }
+
+        if ($uri === 'api/dashboard/hospital/{id}') {
+            return [
+                'id'      => $this->id,
+                'name'    => $this->name,
+                'email' => $this->email,
+                'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d'),
+            ];
+        }
         return [
             'id' => $this->id,
             'name' => $this->name,

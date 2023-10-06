@@ -32,6 +32,12 @@ class DoctorResource extends JsonResource
                 'createdAt' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
             ];
         }
+        if ($uri === 'api/dashboard/{hospitalId}/head/assign') {
+            return [
+                'id'      => $this->id,
+                'doctorInfo'    => new UserResource($this->userInfo),
+            ];
+        }
         return [
             'id'      => $this->id,
             'name'    => $this->userInfo->name ?? null,

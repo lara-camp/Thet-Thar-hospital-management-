@@ -12,7 +12,10 @@ use App\UseCases\Hospitals\EditHospitalAction;
 use App\UseCases\Hospitals\FetchHospitalAction;
 use App\UseCases\Hospitals\StoreHospitalAction;
 use App\UseCases\Hospitals\DeleteHospitalAction;
+use App\UseCases\Hospitals\FetchDashboardDataAction;
+use App\UseCases\Hospitals\FetchHospitalAdminAction;
 use App\UseCases\Hospitals\FetchHospitalDoctorAction;
+use App\UseCases\Hospitals\UpdateHospitalAdminAction;
 
 class HospitalController extends Controller
 {
@@ -68,5 +71,27 @@ class HospitalController extends Controller
             'data' => DoctorResource::collection($result['data']),
             'meta' => $result['meta']
         ]);
+    }
+
+    public function dashboardData($id)
+    {
+        $result = (new FetchDashboardDataAction())($id);
+        return response()->json([
+            'data' => $result
+        ]);
+    }
+
+    public function headInfo($hospitalId)
+    {
+        $result = (new FetchHospitalAdminAction)($hospitalId);
+        return response()->json([
+            'data' => $result
+        ]);
+    }
+
+    public function updateHead(Hospital $hospitalId)
+    {
+        (new UpdateHospitalAdminAction)($hospitalId);
+        return $this->success('Updated hospital head successfully.', null);
     }
 }

@@ -19,6 +19,11 @@ class Hospital extends Model
     {
         return $this->hasMany(Patient::class, 'hospital_id');
     }
+
+    public function admin()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
     public function image()
     {
         return $this->morphMany(Image::class, 'imageable');

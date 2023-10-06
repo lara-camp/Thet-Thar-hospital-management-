@@ -63,4 +63,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class, 'id');
     }
+
+    public function hospitalAdmin()
+    {
+        return $this->morphTo();
+    }
 }

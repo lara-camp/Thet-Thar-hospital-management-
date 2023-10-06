@@ -17,6 +17,7 @@ class FetchDoctorAction
         ]);
         $page = $validated['page'] ?? 1;
         $perPage = $validated['perPage'] ?? 6;
+
         $data = Doctor::paginate($perPage, ['*'], 'page',  $page)->withQueryString();
         $meta = $this->getPaginationMeta($data);
 

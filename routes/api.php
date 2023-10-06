@@ -40,6 +40,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/image-upload/{id}', [ImageController::class, 'delete']);
     Route::get('/dashboard/hospital/{hospitalId}/doctors', [HospitalController::class, 'hospitalDoctors']);
     Route::get('/normal-users', [UserController::class, 'index']);
+    Route::get('/dashboard/{hospitalId}/head/assign', [HospitalController::class, 'hospitalDoctors']);
+    Route::get('/hospital/{hospitalId}/head', [HospitalController::class, 'headInfo']);
+    Route::get('/dashboard/hospital/{hospitalId}', [HospitalController::class, 'dashboardData']);
+    Route::put('/dashboard/{hospitalId}/head', [HospitalController::class, 'updateHead']);
 });
 
 
