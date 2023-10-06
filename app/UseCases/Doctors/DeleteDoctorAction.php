@@ -2,6 +2,7 @@
 
 namespace App\UseCases\Doctors;
 
+use App\Models\Doctor;
 use App\Models\User;
 
 class DeleteDoctorAction

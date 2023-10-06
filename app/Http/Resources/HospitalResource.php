@@ -15,7 +15,7 @@ class HospitalResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $uri = $request->route()?->uri;
+        $uri = $request->route()->uri;
         if (!$uri) return [];
 
         // Only include companyName and companyStatus for /api/org

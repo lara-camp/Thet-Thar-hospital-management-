@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Events\MessageNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +18,13 @@ use App\Http\Controllers\Api\Auth\RegisterController;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/event', function(){
+    event(new MessageNotification("This is our first broadcast message"));
+});
+
+Route::get('/listen', function () {
+    return view('listen');
+});
+
 Route::get("/email/verify/{id}/{hash}", [RegisterController::class, "verify"])->name("verify.email");
