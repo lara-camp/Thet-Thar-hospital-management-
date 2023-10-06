@@ -11,6 +11,7 @@ use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\HospitalController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\ImageController;
+use App\Http\Controllers\Api\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,7 @@ use App\Http\Controllers\Api\ImageController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+
 
 Route::post('/login', [LoginLogoutController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
@@ -41,6 +43,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/{doctorId}/appointments', [AppointmentController::class, 'appointmentsTime']);
     Route::post('/image-upload', [ImageController::class, 'store']);
     Route::delete('/image-upload/{id}', [ImageController::class, 'delete']);
+    Route::get('/message/{receiverId?}',[MessageController::class, 'index']);
+    Route::post('/message/{receiverId?}',[MessageController::class, 'store']);
 });
 
 
