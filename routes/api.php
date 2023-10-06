@@ -39,6 +39,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/image-upload', [ImageController::class, 'store']);
     Route::delete('/image-upload/{id}', [ImageController::class, 'delete']);
     Route::get('/dashboard/hospital/{hospitalId}/doctors', [HospitalController::class, 'hospitalDoctors']);
+    Route::get('/normal-users', [UserController::class, 'index']);
 });
 
 
