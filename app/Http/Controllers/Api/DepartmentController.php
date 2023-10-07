@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DepartmentResource;
 use App\Models\Department;
@@ -10,10 +11,7 @@ use App\UseCases\Department\DeleteDepartmentAction;
 use App\UseCases\Department\StoreDepartmentAction;
 use App\UseCases\Department\UpdateDepartmentAction;
 use Illuminate\Http\Request;
-use App\Traits\HttpResponses;
 use Illuminate\Support\Collection;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\DepartmentResource;
 use App\Http\Resources\HospitalResource;
 
 class DepartmentController extends Controller
@@ -34,12 +32,12 @@ class DepartmentController extends Controller
         return $this->success('Successfully inserted.', null, 201);
     }
 
-    public function update(Request $request , Department $department)
+    public function update(Request $request, Department $department)
     {
         $request->validate([
             'name' => 'required|min:2|max:100'
         ]);
-        $update = (new UpdateDepartmentAction)($request->all(),$department);
+        $update = (new UpdateDepartmentAction)($request->all(), $department);
         return $this->success('Successfully updated.', $update);
     }
 
