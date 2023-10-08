@@ -2,6 +2,7 @@
 
 namespace App\UseCases\Doctors;
 
+use App\Models\Message;
 use Carbon\Carbon;
 use App\Models\Doctor;
 use App\Models\Appointment;
@@ -17,7 +18,6 @@ class CheckAppointmentAction
 
     public function __invoke($formData)
     {
-
         $appointment_time = $formData['appointment_time'];
         $doctorId = $formData['doctor_id'];
         $current_date = Carbon::now()->format('Y-m-d');
@@ -45,6 +45,16 @@ class CheckAppointmentAction
                     $formData['patient_id'] = $patientId;
                     $formData['doctor_id'] = $doctorId;
                     Appointment::create($formData);
+
+                    $doctor = Doctor::where('id',$doctorId)->first();
+                    $receiverId = $doctor->userInfo->id;
+
+                    Message::create([
+                       'sender_id' => Auth::id(),
+                       'receiver_id' =>  $receiverId,
+                        'booking_id' => $booking_id,
+                        'message' => $formData['description']
+                    ]);
 
                     return [
                         'msg' => 'Appointment booked successfully.',

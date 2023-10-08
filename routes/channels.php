@@ -17,6 +17,6 @@ Broadcast::channel('notification', function () {
     return true;
 });
 
-Broadcast::channel('message.{booking_id}', function () {
+Broadcast::channel('message.{booking_id}', function ($message) {
     return true;
 });

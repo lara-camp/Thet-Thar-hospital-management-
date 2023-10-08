@@ -83,6 +83,7 @@ class HospitalController extends Controller
 
     public function headInfo($hospitalId)
     {
+//        return $hospitalId;
         $result = (new FetchHospitalAdminAction)($hospitalId);
         return response()->json([
             'data' => $result
