@@ -57,8 +57,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/dashboard/{hospitalId}/head', [HospitalController::class, 'updateHead']);
 
     // Doctor dashboard
-    Route::get('/dashboard/doctor/{doctor}/hospitals', [DoctorDashboardController::class, 'hospitals']);
-    Route::get('/dashboard/doctor/{doctor}/patients', [DoctorDashboardController::class, 'patients']);
+    Route::get('/dashboard/doctor/{doctor}/hospitals', [DoctorController::class, 'hospitals']);
+    Route::get('/dashboard/doctor/{doctor}/patients', [DoctorController::class, 'patients']);
+    Route::post('/dashboard/doctor/{doctor}/update', [DoctorController::class, 'updateProfile']);
 });
 
 Route::post('/password/email',  [ForgotPasswordController::class, 'sendResetMail']);

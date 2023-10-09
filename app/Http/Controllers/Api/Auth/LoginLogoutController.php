@@ -35,6 +35,7 @@ class LoginLogoutController extends Controller
                         'name' => $user->name,
                         'email' => $user->email,
                         'phone' => $user->phone,
+                        'address' => $user->address,
                         'role' => $user->role,
                     ]
                 ], 200);
