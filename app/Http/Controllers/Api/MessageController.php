@@ -2,55 +2,47 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Events\MessageSending;
-use App\Http\Controllers\Controller;
 use App\Models\Message;
 use App\Models\Patient;
+use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
-use App\UseCases\Message\FetchConnectedUserAction;
+use App\Events\MessageSending;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use App\UseCases\Message\FetchUserMessages;
 use App\UseCases\Message\StoreMessageAction;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\UseCases\Message\FetchConnectedUserAction;
 
 class MessageController extends Controller
 {
     use HttpResponses;
 
-    public function index(Request $request , $receiverId = null)
+    public function index(Request $request, $receiverId = null)
     {
-        $messages = empty($receiverId) ? [] : (new FetchUserMessages)($request->user()->id , $receiverId);
+        $messages = empty($receiverId) ? [] : (new FetchUserMessages)($request->user()->id, $receiverId);
 
         return $this->success([
             'messages' => $messages,
             'chatUsers' => (new FetchConnectedUserAction())(Auth::user()->id),
-            'receiver' => Patient::find($receiverId)
+            'receiver' => User::find($receiverId)
         ]);
     }
 
-    public function store(Request $request, ?int $receiverId = null)
+    public function store(Request $request)
     {
-
-        $request->validate([
-            'message' => 'required|string'
-        ]);
-
-        if (empty($receiverId)){
-            return $this->error("Receiver's id is messing.");
-        }
-
-
-
-        try{
+        try {
             $message = (new StoreMessageAction())([
-                               'sender_id' => Auth::user()->id,
-                               'receiver_id' => $receiverId,
-                               'message' => $request->message,
-                               'booking_id'=> request('booking_id')
-                           ]);
+                'sender_id' => Auth::user()->id,
+                'receiver_id' => $request->doctor_id,
+                'message' => $request->message ?? '',
+                'booking_id' => $request->booking_id
+            ]);
+
             event(new MessageSending($message));
             return $this->success("Message is sent successfully.");
-        }catch (\Throwable $th){
+        } catch (\Throwable $th) {
             return $this->error($th);
         }
     }

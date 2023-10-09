@@ -1,17 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\MessageController;
+use App\Http\Controllers\Api\PatientController;
+use App\Http\Controllers\Api\HospitalController;
+use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginLogoutController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
-use App\Http\Controllers\Api\DepartmentController;
-use App\Http\Controllers\Api\HospitalController;
-use App\Http\Controllers\Api\PatientController;
-use App\Http\Controllers\Api\ImageController;
-use App\Http\Controllers\Api\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,8 +44,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/{doctorId}/appointments', [AppointmentController::class, 'appointmentsTime']);
     Route::post('/image-upload', [ImageController::class, 'store']);
     Route::delete('/image-upload/{id}', [ImageController::class, 'delete']);
-    Route::get('/message/{receiverId?}',[MessageController::class, 'index']);
-    Route::post('/message/{receiverId?}',[MessageController::class, 'store']);
+    Route::get('/message/{receiverId?}', [MessageController::class, 'index']);
+    Route::post('/message/{receiverId?}', [MessageController::class, 'store']);
     Route::get('/dashboard/hospital/{hospitalId}/doctors', [HospitalController::class, 'hospitalDoctors']);
     Route::get('/normal-users', [UserController::class, 'index']);
     Route::get('/dashboard/{hospitalId}/head/assign', [HospitalController::class, 'hospitalDoctors']);
