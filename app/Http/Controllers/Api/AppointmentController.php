@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Appointment;
+use App\UseCases\Doctors\FetchTodayAppointmentForDoctorAction;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
@@ -74,6 +75,8 @@ class AppointmentController extends Controller
         return $this->success($result['msg'], $result['booking_id']);
     }
 
+
+
     public function appointmentsTime($doctorId)
     {
         $result = (new FetchAppointmentTimeAction)($doctorId);
@@ -81,7 +84,14 @@ class AppointmentController extends Controller
             'data' => AppointmentTimeResource::collection($result)
         ]);
     }
-
+  
+    public function todayAppointmentForDoctor()
+    {
+        $result = (new FetchTodayAppointmentForDoctorAction())();
+        return response()->json([
+            'data' =>  AppointmentResource::collection($result)
+        ]);
+  
     public function leaveChat($bookingId)
     {
         $result = (new UpdateForLeaveChatAction)($bookingId);

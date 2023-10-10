@@ -2,6 +2,8 @@
 
 namespace App\UseCases\Doctors;
 
+use App\Events\MessageSending;
+use App\Models\Message;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Doctor;
@@ -20,7 +22,6 @@ class CheckAppointmentAction
 
     public function __invoke($formData)
     {
-
         $appointment_time = $formData['appointment_time'];
         $doctorId = $formData['doctor_id'];
         $current_date = Carbon::now()->format('Y-m-d');
@@ -50,6 +51,16 @@ class CheckAppointmentAction
                     $appointment = Appointment::create($formData);
                     $patient_name = User::where('id', $patientId)->first();
                     Mail::to($patient_name->email)->send(new NotifMail($patient_name->name, $appointment));
+
+                    $doctor = Doctor::where('id',$doctorId)->first();
+                    $receiverId = $doctor->userInfo->id;
+
+                    Message::create([
+                       'sender_id' => Auth::id(),
+                       'receiver_id' =>  $receiverId,
+                        'booking_id' => $booking_id,
+                        'message' => $formData['description']
+                    ]);
 
                     return [
                         'msg' => 'Appointment booked successfully.',

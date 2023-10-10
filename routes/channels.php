@@ -13,10 +13,8 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('notification', function () {
-    return true;
-});
+//ee
 
-Broadcast::channel('message.{booking_id}', function () {
-    return true;
-});
+//Broadcast::channel('message.{booking_id}', function ($user, $message) {
+//    return $user->id == $message->sender_id || $user->id == $message->receiver_id;
+//});
