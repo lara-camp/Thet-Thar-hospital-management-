@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
         //        $chunks->each(function ($chunk) {
         //            User::insert($chunk->toArray());
         //        });
-        User::factory(10)->create();
+        //  User::factory(10)->create();
         User::insert([
             'name' => 'SuperAdmin',
             'email' => 'superadmin@gmail.com',
@@ -40,17 +40,17 @@ class UserSeeder extends Seeder
             'role' => 'guest',
         ]);
         User::insert([
-            'name' => 'Admin',
-            'email' => 'admin@gmail.com',
+            'name' => 'Hospital Admin',
+            'email' => 'hospital@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$/wQTKHDVTKcZXxqvgXHR5.yOr6vjBkHoErWrI0vhnHCs6rhF8LTRW',
             'remember_token' => Str::random(10),
             'is_visible' => true,
-            'role' => 'admin',
+            'role' => 'hospitalAdmin',
         ]);
         User::insert([
-            'name' => 'member',
-            'email' => 'member@gmail.com',
+            'name' => 'Patient',
+            'email' => 'patient@gmail.com',
             'email_verified_at' => now(),
             'password' => '$2y$10$/wQTKHDVTKcZXxqvgXHR5.yOr6vjBkHoErWrI0vhnHCs6rhF8LTRW',
             'remember_token' => Str::random(10),

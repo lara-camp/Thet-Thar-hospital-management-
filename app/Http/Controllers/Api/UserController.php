@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Api;
 
+use Error;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
-use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
-use App\UseCases\Users\DeleteUserAction;
 use App\UseCases\Users\EditUserAction;
 use App\UseCases\Users\FetchUserAction;
 use App\UseCases\Users\StoreUserAction;
-use Error;
+use App\UseCases\Users\DeleteUserAction;
+use App\UseCases\Users\FetchUserHospitalAction;
 
 class UserController extends Controller
 {
@@ -58,5 +59,13 @@ class UserController extends Controller
     {
         (new DeleteUserAction)($user);
         return $this->success('Successfully Deleted', null);
+    }
+
+    public function fetchUserHospital()
+    {
+        $result = (new FetchUserHospitalAction)();
+        return response()->json([
+            'hospitalId' => $result,
+        ]);
     }
 }
