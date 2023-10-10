@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\MessageNotification;
 use App\Events\MessageSending;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MessageResource;
@@ -11,6 +12,7 @@ use App\Models\Message;
 use App\Models\Patient;
 use App\Models\User;
 use App\Traits\HttpResponses;
+use App\UseCases\Appointments\FetchBookingIdAction;
 use App\UseCases\Message\FetchConnectedUserAction;
 use App\UseCases\Message\FetchUserMessages;
 use App\UseCases\Message\StoreMessageAction;
@@ -27,11 +29,13 @@ class MessageController extends Controller
         $messages = empty($receiverId) ? [] : (new FetchUserMessages)(Auth::id() , $receiverId);
 
         $receiver = $receiverId == null ? [] : new UserResource(User::find($receiverId));
+        $booking_id = $receiverId == null ? '' : (new FetchBookingIdAction)(Auth::id(), $receiverId);
 
         return $this->success([
-            'messages' => MessageResource::collection($messages),
+            'messages' => $messages,
             'chatUsers' => (new FetchConnectedUserAction())(Auth::user()->id),
             'receiver' => $receiver,
+            'booking_id' =>  $booking_id,
 //            'receiver' => new PatientResource(Patient::find($receiverId))
 
         ]);
@@ -60,5 +64,12 @@ class MessageController extends Controller
         }catch (\Throwable $th){
             return $this->error($th);
         }
+    }
+
+    public function testing()
+    {
+        $message = "Hello world!";
+        event(new MessageNotification($message));
+        return view('listen');
     }
 }

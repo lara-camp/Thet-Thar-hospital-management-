@@ -2,6 +2,7 @@
 
 namespace App\UseCases\Doctors;
 
+use App\Events\MessageSending;
 use App\Models\Message;
 use Carbon\Carbon;
 use App\Models\Doctor;
