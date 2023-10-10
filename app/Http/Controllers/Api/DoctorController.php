@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DoctorRequest;
+use App\Http\Resources\AppointmentResource;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\HospitalResource;
+use App\Models\Appointment;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use App\UseCases\Doctors\EditDoctorAction;
@@ -120,5 +122,11 @@ class DoctorController extends Controller
                 'role' => $doctor->role,
             ]
         ], 200);
+    }
+
+    public function appointments(User $user)
+    {
+        $appointments = Doctor::with('appointments')->where('user_id', $user->id)->first()->appointments()->paginate(4);
+        return $this->success('Successfully updated.', AppointmentResource::collection($appointments), 200);
     }
 }

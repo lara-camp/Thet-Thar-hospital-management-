@@ -60,6 +60,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/dashboard/doctor/{doctor}/hospitals', [DoctorController::class, 'hospitals']);
     Route::get('/dashboard/doctor/{doctor}/patients', [DoctorController::class, 'patients']);
     Route::post('/dashboard/doctor/{doctor}/update', [DoctorController::class, 'updateProfile']);
+    Route::get('/dashboard/doctor/{doctor}/appointments', [DoctorController::class, 'appointments']);
 });
 
 Route::post('/password/email',  [ForgotPasswordController::class, 'sendResetMail']);
