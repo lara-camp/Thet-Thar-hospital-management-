@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ChatController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\DoctorController;
@@ -46,6 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/image-upload/{id}', [ImageController::class, 'delete']);
     Route::get('/message/{receiverId?}', [MessageController::class, 'index']);
     Route::post('/message/{receiverId?}', [MessageController::class, 'store']);
+    Route::post('/leave-chat/{bookingId}', [AppointmentController::class, 'leaveChat']);
     Route::get('/dashboard/hospital/{hospitalId}/doctors', [HospitalController::class, 'hospitalDoctors']);
     Route::get('/normal-users', [UserController::class, 'index']);
     Route::get('/dashboard/{hospitalId}/head/assign', [HospitalController::class, 'hospitalDoctors']);
