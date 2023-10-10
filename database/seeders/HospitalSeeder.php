@@ -19,5 +19,15 @@ class HospitalSeeder extends Seeder
         $chunks->each(function ($chunk) {
             Hospital::insert($chunk->toArray());
         });
+        Hospital::insert([
+            'name' => 'Hospital One',
+            'phone' => '+13129498088',
+            'email' => 'hospitalone@gmail.com',
+            'address' => '9717 Kihn Lakes Edaview, WI 99814',
+            'location' => 'Yangon',
+            'is_visible' => true,
+            'user_id' => 13,
+            'bio' => 'The special one of yangon',
+        ]);
     }
 }

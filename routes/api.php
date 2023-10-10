@@ -52,6 +52,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/hospital/{hospitalId}/head', [HospitalController::class, 'headInfo']);
     Route::get('/dashboard/hospital/{hospitalId}', [HospitalController::class, 'dashboardData']);
     Route::put('/dashboard/{hospitalId}/head', [HospitalController::class, 'updateHead']);
+    Route::get('/fetch-hospital', [UserController::class, 'fetchUserHospital']); //fetch the user of hospital if user is HospitalAdmin
 });
 
 
