@@ -2,16 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\DoctorController;
+use App\Http\Controllers\Api\MessageController;
+use App\Http\Controllers\Api\PatientController;
+use App\Http\Controllers\Api\HospitalController;
+use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginLogoutController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
-use App\Http\Controllers\Api\DepartmentController;
-use App\Http\Controllers\Api\HospitalController;
-use App\Http\Controllers\Api\PatientController;
-use App\Http\Controllers\Api\ImageController;
-use App\Http\Controllers\Api\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,14 +44,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/today-appointment',[AppointmentController::class , 'todayAppointmentForDoctor']);
     Route::post('/image-upload', [ImageController::class, 'store']);
     Route::delete('/image-upload/{id}', [ImageController::class, 'delete']);
-    Route::get('/message/{receiverId?}',[MessageController::class, 'index']);
-    Route::post('/message/{receiverId?}',[MessageController::class, 'store']);
+    Route::get('/message/{receiverId?}', [MessageController::class, 'index']);
+    Route::post('/message/{receiverId?}', [MessageController::class, 'store']);
+    Route::post('/leave-chat/{bookingId}', [AppointmentController::class, 'leaveChat']);
     Route::get('/dashboard/hospital/{hospitalId}/doctors', [HospitalController::class, 'hospitalDoctors']);
     Route::get('/normal-users', [UserController::class, 'index']);
     Route::get('/dashboard/{hospitalId}/head/assign', [HospitalController::class, 'hospitalDoctors']);
     Route::get('/hospital/{hospitalId}/head', [HospitalController::class, 'headInfo']);
     Route::get('/dashboard/hospital/{hospitalId}', [HospitalController::class, 'dashboardData']);
     Route::put('/dashboard/{hospitalId}/head', [HospitalController::class, 'updateHead']);
+    Route::get('/fetch-hospital', [UserController::class, 'fetchUserHospital']); //fetch the user of hospital if user is HospitalAdmin
 });
 
 

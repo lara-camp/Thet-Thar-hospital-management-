@@ -5,7 +5,9 @@ namespace App\UseCases\Doctors;
 use App\Events\MessageSending;
 use App\Models\Message;
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Doctor;
+use App\Mail\NotifMail;
 use App\Models\Appointment;
 use Illuminate\Support\Str;
 use App\Models\AppointmentTime;
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class CheckAppointmentAction
 {
@@ -42,10 +45,12 @@ class CheckAppointmentAction
                     $uniqueNumber = substr(crc32(uniqid()), 0, $numberOfDigits);
                     $booking_id = $uniqueNumber;
                     $formData['booking_id'] = $booking_id;
-                    $patientId = Auth::id();
+                    $patientId = Auth::id(); //To Fix
                     $formData['patient_id'] = $patientId;
                     $formData['doctor_id'] = $doctorId;
-                    Appointment::create($formData);
+                    $appointment = Appointment::create($formData);
+                    $patient_name = User::where('id', $patientId)->first();
+                    Mail::to($patient_name->email)->send(new NotifMail($patient_name->name, $appointment));
 
                     $doctor = Doctor::where('id',$doctorId)->first();
                     $receiverId = $doctor->userInfo->id;

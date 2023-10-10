@@ -16,6 +16,7 @@ use App\UseCases\Doctors\FetchAppointmentTimeAction;
 use App\UseCases\Appointments\FetchAppointmentAction;
 use App\UseCases\Appointments\StoreAppointmentAction;
 use App\UseCases\Appointments\DeleteAppointmentAction;
+use App\UseCases\Appointments\UpdateForLeaveChatAction;
 
 class AppointmentController extends Controller
 {
@@ -83,12 +84,17 @@ class AppointmentController extends Controller
             'data' => AppointmentTimeResource::collection($result)
         ]);
     }
-
+  
     public function todayAppointmentForDoctor()
     {
         $result = (new FetchTodayAppointmentForDoctorAction())();
         return response()->json([
             'data' =>  AppointmentResource::collection($result)
         ]);
+  
+    public function leaveChat($bookingId)
+    {
+        $result = (new UpdateForLeaveChatAction)($bookingId);
+        return $this->success('Leave Successfully.', null);
     }
 }
