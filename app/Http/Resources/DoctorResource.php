@@ -40,6 +40,7 @@ class DoctorResource extends JsonResource
         }
         return [
             'id'      => $this->id,
+            'doctorId' => $this->user_id,
             'name'    => $this->userInfo->name ?? null,
             'email'   => $this->userInfo->email ?? null,
             'phone'    => $this->userInfo->phone ?? null,

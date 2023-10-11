@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('hospital_id');
             $table->foreignId('doctor_id');
-            $table->time('checkin_time');
             $table->timestamps();
         });
     }

@@ -84,14 +84,15 @@ class AppointmentController extends Controller
             'data' => AppointmentTimeResource::collection($result)
         ]);
     }
-  
+
     public function todayAppointmentForDoctor()
     {
         $result = (new FetchTodayAppointmentForDoctorAction())();
         return response()->json([
             'data' =>  AppointmentResource::collection($result)
         ]);
-  
+    }
+
     public function leaveChat($bookingId)
     {
         $result = (new UpdateForLeaveChatAction)($bookingId);
