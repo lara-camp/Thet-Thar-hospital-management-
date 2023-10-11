@@ -19,32 +19,32 @@ return new class extends Migration
             [
                 'id' => 1,
                 'hospital_id' => 1,
-                'doctor_id' => 15,
+                'doctor_id' => 1,
             ],
             [
                 'id' => 2,
                 'hospital_id' => 1,
-                'doctor_id' => 16,
+                'doctor_id' => 2,
             ],
             [
                 'id' => 3,
                 'hospital_id' => 1,
-                'doctor_id' => 17,
+                'doctor_id' => 3,
             ],
             [
                 'id' => 4,
                 'hospital_id' => 1,
-                'doctor_id' => 18,
+                'doctor_id' => 4,
             ],
             [
                 'id' => 5,
                 'hospital_id' => 1,
-                'doctor_id' => 19,
+                'doctor_id' => 5,
             ],
             [
                 'id' => 6,
                 'hospital_id' => 2,
-                'doctor_id' => 20,
+                'doctor_id' => 6,
             ],
         ];
         DB::table('hospital_doctor')->insert($data);

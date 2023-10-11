@@ -18,7 +18,7 @@ return new class extends Migration
         $data = [
             [
                 'patient_id' =>  6,
-                'doctor_id' =>  15,
+                'doctor_id' =>  1,
                 'booking_id' => "fresher.123",
                 'appointment_time' => "09:00:00",
                 'appointment_date' => now(),
@@ -28,7 +28,7 @@ return new class extends Migration
             ],
             [
                 'patient_id' =>  7,
-                'doctor_id' =>  15,
+                'doctor_id' =>  2,
                 'booking_id' => "fresher.223",
                 'appointment_time' => "09:30:00",
                 'appointment_date' => now(),
@@ -38,7 +38,7 @@ return new class extends Migration
             ],
             [
                 'patient_id' =>  6,
-                'doctor_id' =>  16,
+                'doctor_id' =>  2,
                 'booking_id' => "fresher.1123",
                 'appointment_time' => "10:00:00",
                 'appointment_date' => now(),
@@ -48,7 +48,7 @@ return new class extends Migration
             ],
             [
                 'patient_id' =>  6,
-                'doctor_id' =>  15,
+                'doctor_id' =>  3,
                 'booking_id' => "fresher.33",
                 'appointment_time' => "10:30:00",
                 'appointment_date' => now(),
@@ -58,7 +58,7 @@ return new class extends Migration
             ],
             [
                 'patient_id' =>  23,
-                'doctor_id' =>  15,
+                'doctor_id' =>  4,
                 'booking_id' => "fresher.30",
                 'appointment_time' => "11:00:00",
                 'appointment_date' => now(),
@@ -68,7 +68,7 @@ return new class extends Migration
             ],
             [
                 'patient_id' =>  6,
-                'doctor_id' =>  16,
+                'doctor_id' =>  5,
                 'booking_id' => "fresher.39",
                 'appointment_time' => "11:30:00",
                 'appointment_date' => now(),
