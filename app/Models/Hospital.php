@@ -9,7 +9,7 @@ class Hospital extends Model
 {
     use HasFactory;
 
-    public $guarded = ['id'];
+    public $guarded = [];
 
     public function doctors()
     {
