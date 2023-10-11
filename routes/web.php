@@ -23,6 +23,8 @@ Route::get('/event', function(){
     event(new MessageNotification("This is our first broadcast message"));
 });
 
+Route::get('/test',[\App\Http\Controllers\Api\MessageController::class, 'testing']);
+
 Route::get('/listen', function () {
     return view('listen');
 });

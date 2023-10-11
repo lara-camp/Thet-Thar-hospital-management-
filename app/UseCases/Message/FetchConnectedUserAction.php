@@ -32,7 +32,8 @@ class FetchConnectedUserAction
             if (!in_array($userId, $usedUserIds)) {
                 $recentUsersWithMessage[] = [
                     'user_id' => $userId,
-                    'message' => $message->message
+                    'message' => $message->message,
+                    'booking_id' => $message->booking_id
                 ];
                 $usedUserIds[] = $userId;
             }
