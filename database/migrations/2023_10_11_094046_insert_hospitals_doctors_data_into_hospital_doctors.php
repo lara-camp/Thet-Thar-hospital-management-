@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::disableForeignKeyConstraints();
-        DB::table('hospital_doctors')->truncate();
+        DB::table('hospital_doctor')->truncate();
         Schema::enableForeignKeyConstraints();
         $data = [
             [
@@ -47,7 +47,7 @@ return new class extends Migration
                 'doctor_id' => 20,
             ],
         ];
-        DB::table('hospital_doctors')->insert($data);
+        DB::table('hospital_doctor')->insert($data);
     }
 
     /**
@@ -56,7 +56,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::disableForeignKeyConstraints();
-        DB::table('hospital_doctors')->truncate();
+        DB::table('hospital_doctor')->truncate();
         Schema::enableForeignKeyConstraints();
     }
 };

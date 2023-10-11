@@ -12,6 +12,7 @@ class FetchAppointmentAction
 
     public function __invoke(): array
     {
+
         $validated = request()->validate([
             'page' => 'integer',
             'perPage' => 'integer',
@@ -24,8 +25,6 @@ class FetchAppointmentAction
         } else {
             $data = Appointment::paginate($perPage, ['*'], 'page',  $page)->withQueryString();
         }
-
-
         $meta = $this->getPaginationMeta($data);
 
         $result = [
