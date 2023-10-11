@@ -81,8 +81,9 @@ class HospitalController extends Controller
         ]);
     }
 
-    public function headInfo($hospitalId)
+    public function headInfo($hospitalId) //head=>Headmaster
     {
+//        return $hospitalId;
         $result = (new FetchHospitalAdminAction)($hospitalId);
         return response()->json([
             'data' => $result
