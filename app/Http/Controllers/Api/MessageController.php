@@ -37,13 +37,19 @@ class MessageController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(Request $request , $receiverId = null)
     {
+        // return [
+        //     'sender_id' => Auth::user()->id,
+        //     'receiver_id' => $receiverId,
+        //     'message' => $request->message,
+        //     'booking_id' => $request->booking_id
+        // ];
         try {
             $message = (new StoreMessageAction())([
                 'sender_id' => Auth::user()->id,
-                'receiver_id' => $request->doctor_id,
-                'message' => $request->message ?? '',
+                'receiver_id' => $receiverId,
+                'message' => $request->message,
                 'booking_id' => $request->booking_id
             ]);
 

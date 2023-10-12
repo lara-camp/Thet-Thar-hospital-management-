@@ -23,7 +23,7 @@ class Doctor extends Model
 
     public function hospitals()
     {
-        return $this->belongsToMany(Hospital::class, 'hospital_doctors', 'doctor_id', 'hospital_id');
+        return $this->belongsToMany(Hospital::class, 'hospital_doctor', 'doctor_id', 'hospital_id');
     }
 
     public function department()
@@ -33,7 +33,7 @@ class Doctor extends Model
 
     public function appointments()
     {
-        return $this->hasMany(Appointment::class, 'doctor_id');
+        return $this->hasMany(Appointment::class, 'id');
     }
 
     public function userInfo()
