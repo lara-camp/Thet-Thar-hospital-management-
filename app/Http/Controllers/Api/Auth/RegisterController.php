@@ -47,7 +47,7 @@ class RegisterController extends Controller
         if ($user) {
             $user->markEmailAsVerified();
 
-            return Redirect::to("https://google.com");
+            return Redirect::to("http://localhost:3000/auth/login");
         } else {
             return response()->json([
                 'message' => 'Invalid verification link.',
