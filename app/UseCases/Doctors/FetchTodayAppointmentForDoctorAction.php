@@ -19,10 +19,10 @@ class FetchTodayAppointmentForDoctorAction
         $today = Carbon::today();
         $user = User::where('id', Auth::id())->first();
         $doctorId = $user->doctor->id;
-        $appiontments = Appointment::where('appointment_date', $today)->where('doctor_id',$doctorId)->get();
+        $appiontments = Appointment::where('appointment_date' , $today )->where('doctor_id',$doctorId)->get();
         return $appiontments;
 
-//        return $doctorId;
+    //    return $doctorId;
     }
 
 }

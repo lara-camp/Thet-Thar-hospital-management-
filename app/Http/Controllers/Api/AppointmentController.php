@@ -89,7 +89,7 @@ class AppointmentController extends Controller
     {
         $result = (new FetchTodayAppointmentForDoctorAction())();
         return response()->json([
-            'data' =>  AppointmentResource::collection($result)
+            'data' =>   AppointmentResource::collection($result)
         ]);
     }
 
