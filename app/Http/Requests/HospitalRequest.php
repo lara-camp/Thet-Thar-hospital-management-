@@ -27,6 +27,7 @@ class HospitalRequest extends FormRequest
             'phone' => 'required|string',
             'email' => 'required|string|email|unique:hospitals',
             'address' => 'required|string|max:100',
+            'location' => 'required|string',
             'bio' => 'nullable|string',
         ];
 

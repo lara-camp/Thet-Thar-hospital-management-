@@ -14,10 +14,20 @@ class HospitalSeeder extends Seeder
     public function run(): void
     {
         Hospital::truncate();
-        $data = Hospital::factory(100)->make();
+        $data = Hospital::factory(10)->make();
         $chunks = $data->chunk(10);
         $chunks->each(function ($chunk) {
             Hospital::insert($chunk->toArray());
         });
+        Hospital::insert([
+            'name' => 'Hospital One',
+            'phone' => '+13129498088',
+            'email' => 'hospitalone@gmail.com',
+            'address' => '9717 Kihn Lakes Edaview, WI 99814',
+            'location' => 'Yangon',
+            'is_visible' => true,
+            'user_id' => 3,
+            'bio' => 'The special one of yangon',
+        ]);
     }
 }
