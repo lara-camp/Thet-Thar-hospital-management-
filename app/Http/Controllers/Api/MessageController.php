@@ -8,6 +8,7 @@ use App\Models\Patient;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Events\MessageSending;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
@@ -21,7 +22,8 @@ class MessageController extends Controller
 {
     use HttpResponses;
 
-    public function index(Request $request, $receiverId = null)
+    //Message Fetching
+    public function index(int $receiverId = null): JsonResponse
     {
         $messages = empty($receiverId) ? [] : (new FetchUserMessages)(Auth::id(), $receiverId);
 
@@ -36,15 +38,9 @@ class MessageController extends Controller
         ]);
     }
 
-
-    public function store(Request $request , $receiverId = null)
+    //Message Storing
+    public function store(Request $request, int $receiverId = null): JsonResponse
     {
-        // return [
-        //     'sender_id' => Auth::user()->id,
-        //     'receiver_id' => $receiverId,
-        //     'message' => $request->message,
-        //     'booking_id' => $request->booking_id
-        // ];
         try {
             $message = (new StoreMessageAction())([
                 'sender_id' => Auth::user()->id,

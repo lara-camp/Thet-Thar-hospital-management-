@@ -11,7 +11,7 @@ class StoreDepartmentAction  {
 
     public function __invoke($formData) : int
     {
-        $department = Department::create($formData);
+        Department::create($formData);
         return 201;
     }
 }

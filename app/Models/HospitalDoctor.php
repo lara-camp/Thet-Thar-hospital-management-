@@ -9,4 +9,5 @@ class HospitalDoctor extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $table = 'hospital_doctor';
 }

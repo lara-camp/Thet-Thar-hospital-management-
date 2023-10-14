@@ -14,6 +14,7 @@ use App\UseCases\Users\FetchUserAction;
 use App\UseCases\Users\StoreUserAction;
 use App\UseCases\Users\DeleteUserAction;
 use App\UseCases\Users\FetchUserHospitalAction;
+use Illuminate\Http\JsonResponse;
 
 class UserController extends Controller
 {
@@ -21,7 +22,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $result = (new FetchUserAction)();
         return response()->json([
@@ -30,7 +31,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function store(UserRequest $request)
+    public function store(UserRequest $request): JsonResponse
     {
         (new StoreUserAction())($request->all());
         return $this->success('Inserted hospital successfully.', null, 201);
@@ -38,7 +39,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(User $user): JsonResponse
     {
         return $this->success('Data fetched successfully.', $user);
     }
@@ -46,7 +47,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UserRequest $request, User $user)
+    public function update(UserRequest $request, User $user): JsonResponse
     {
         $user = (new EditUserAction)($request->all(), $user);
         return $this->success('Successfully updated.', $user);
@@ -55,13 +56,13 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(User $user): JsonResponse
     {
         (new DeleteUserAction)($user);
         return $this->success('Successfully Deleted', null);
     }
 
-    public function fetchUserHospital()
+    public function fetchUserHospital(): JsonResponse
     {
         $result = (new FetchUserHospitalAction)();
         return response()->json([

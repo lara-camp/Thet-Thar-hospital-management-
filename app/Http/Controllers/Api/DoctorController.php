@@ -18,7 +18,7 @@ class DoctorController extends Controller
     use HttpResponses;
 
 
-    public function index()
+    public function index(): \Illuminate\Http\JsonResponse
     {
         $result = (new FetchDoctorAction)();
         return response()->json([
@@ -30,7 +30,7 @@ class DoctorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(DoctorRequest $request)
+    public function store(DoctorRequest $request): \Illuminate\Http\JsonResponse
     {
 
         (new StoreDoctorAction)($request->all());
@@ -40,7 +40,7 @@ class DoctorController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Doctor $doctor)
+    public function show(Doctor $doctor): \Illuminate\Http\JsonResponse
     {
         return $this->success('Data fetched successfully.', $doctor);
     }
@@ -48,7 +48,7 @@ class DoctorController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(DoctorRequest $request, Doctor $doctor)
+    public function update(DoctorRequest $request, Doctor $doctor): \Illuminate\Http\JsonResponse
     {
         $doctor = (new EditDoctorAction)($request->all(), $doctor);
         return $this->success('Successfully updated.', $doctor);
@@ -57,7 +57,7 @@ class DoctorController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Doctor $doctor)
+    public function destroy(Doctor $doctor): \Illuminate\Http\JsonResponse
     {
         (new DeleteDoctorAction)($doctor);
         return $this->success('Successfully Deleted', null);
