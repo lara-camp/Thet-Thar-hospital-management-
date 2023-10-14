@@ -12,7 +12,7 @@ use Illuminate\Validation\Rules\Password;
 class RegisterAction
 {
 
-    public function __invoke(Request $request)
+    public function __invoke($request)
     {
         $request->validate([
             'name' => 'required|string|max:50|min:3',

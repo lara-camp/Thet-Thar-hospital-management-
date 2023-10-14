@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use Illuminate\Http\JsonResponse;
 use App\UseCases\Auth\LoginAction;
@@ -12,9 +13,9 @@ class LoginLogoutController extends Controller
     use HttpResponses;
 
     //Login Method
-    public function login(): JsonResponse
+    public function login(Request $request): JsonResponse
     {
-        $result = (new LoginAction)();
+        $result = (new LoginAction)($request);
         return response()->json($result);
     }
 

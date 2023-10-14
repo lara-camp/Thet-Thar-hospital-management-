@@ -2,13 +2,16 @@
 
 namespace App\UseCases\Auth;
 
+use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class LoginAction
 {
-    public function __invoke(Request $request)
+    use HttpResponses;
+
+    public function __invoke($request)
     {
         try {
 

@@ -3,13 +3,14 @@
 namespace App\UseCases\Auth;
 
 use App\Models\User;
-use Illuminate\Http\Request;
-use App\Models\ResetCodePassword;
+use Illuminate\Support\Str;
+use App\Mail\VerificationEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Password;
 
 class ResetPasswordAction
 {
-    public function __invoke(Request $request)
+    public function __invoke($request)
     {
         $request->validate([
             'name' => 'required|string|max:50|min:3',

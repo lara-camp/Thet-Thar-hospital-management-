@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordAction
 {
-    public function __invoke(Request $request)
+    public function __invoke($request)
     {
         $data = $request->validate([
             'email' => 'required|email|exists:users',
