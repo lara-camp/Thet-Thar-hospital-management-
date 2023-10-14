@@ -12,13 +12,13 @@ class FetchAppointmentAction
 
     public function __invoke(): array
     {
-
         $validated = request()->validate([
             'page' => 'integer',
             'perPage' => 'integer',
         ]);
         $perPage = $validated['perPage'] ?? 5;
         $page = $validated['page'] ?? 1;
+
         $user_id = Auth::id() ?? null;
         if ($user_id) {
             $data = Appointment::where('patient_id', $user_id)->paginate($perPage, ['*'], 'page',  $page)->withQueryString();

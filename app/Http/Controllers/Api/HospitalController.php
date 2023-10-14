@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Hospital;
 use App\Traits\HttpResponses;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HospitalRequest;
 use App\Http\Resources\DoctorResource;
@@ -23,7 +24,7 @@ class HospitalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $result = (new FetchHospitalAction())();
         return response()->json([
@@ -35,7 +36,7 @@ class HospitalController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(HospitalRequest $request)
+    public function store(HospitalRequest $request): JsonResponse
     {
         (new StoreHospitalAction())($request->all());
         return $this->success('Inserted hospital successfully.', null, 201);
@@ -44,7 +45,7 @@ class HospitalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Hospital $hospital)
+    public function show(Hospital $hospital): JsonResponse
     {
         return $this->success('Fetched hospital successfully.', new HospitalResource($hospital));
     }
@@ -52,19 +53,21 @@ class HospitalController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(HospitalRequest $request, Hospital $hospital)
+    public function update(HospitalRequest $request, Hospital $hospital): JsonResponse
     {
         $hospital = (new EditHospitalAction())($request->all(), $hospital);
         return $this->success('Updated hospital successfully.',  new HospitalResource($hospital));
     }
 
-    public function destroy(Hospital $hospital)
+    //Delete Hospital
+    public function destroy(Hospital $hospital): JsonResponse
     {
         (new DeleteHospitalAction())($hospital);
         return $this->success('Hospital deleted successfully.', null);
     }
 
-    public function hospitalDoctors($id)
+    //Get Hospital Doctors
+    public function hospitalDoctors($id): JsonResponse
     {
         $result = (new FetchHospitalDoctorAction())($id);
         return response()->json([
@@ -73,7 +76,8 @@ class HospitalController extends Controller
         ]);
     }
 
-    public function dashboardData($id)
+    //Get Hospital Dashboard Data
+    public function dashboardData($id): JsonResponse
     {
         $result = (new FetchDashboardDataAction())($id);
         return response()->json([
@@ -81,16 +85,17 @@ class HospitalController extends Controller
         ]);
     }
 
-    public function headInfo($hospitalId) //head=>Headmaster
+    //Get Hospital Headmaster
+    public function headInfo(int $hospitalId): JsonResponse
     {
-//        return $hospitalId;
         $result = (new FetchHospitalAdminAction)($hospitalId);
         return response()->json([
             'data' => $result
         ]);
     }
 
-    public function updateHead(Hospital $hospitalId)
+    //Update Hospital Headmaster
+    public function updateHead(Hospital $hospitalId): JsonResponse
     {
         (new UpdateHospitalAdminAction)($hospitalId);
         return $this->success('Updated hospital head successfully.', null);

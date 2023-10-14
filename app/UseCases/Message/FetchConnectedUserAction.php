@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class FetchConnectedUserAction
 {
-    public function __invoke( int $senderId)
+    public function __invoke(int $senderId)
     {
         DB::statement("SET SESSION sql_mode=''");
 
@@ -19,7 +19,7 @@ class FetchConnectedUserAction
                 ->orWhere('receiver_id', $senderId);
         })
             ->groupBy('sender_id', 'receiver_id')
-            ->select('sender_id', 'receiver_id', 'message','booking_id')
+            ->select('sender_id', 'receiver_id', 'message', 'booking_id')
             ->orderBy('id', 'desc')
             ->limit(30)
             ->get();
@@ -27,7 +27,7 @@ class FetchConnectedUserAction
         $recentUsersWithMessage = [];
         $usedUserIds = [];
 
-        foreach ($recentUsers as $message){
+        foreach ($recentUsers as $message) {
             $userId = $message->sender_id == $senderId ? $message->receiver_id : $message->sender_id;
             if (!in_array($userId, $usedUserIds)) {
                 $recentUsersWithMessage[] = [
@@ -39,8 +39,8 @@ class FetchConnectedUserAction
             }
         }
 
-        foreach ($recentUsersWithMessage as $key => $userMessage){
-            $recentUsersWithMessage[$key]['name'] = User::where('id',$userMessage['user_id'])->value('name') ?? '';
+        foreach ($recentUsersWithMessage as $key => $userMessage) {
+            $recentUsersWithMessage[$key]['name'] = User::where('id', $userMessage['user_id'])->value('name') ?? '';
         }
 
         return $recentUsersWithMessage;

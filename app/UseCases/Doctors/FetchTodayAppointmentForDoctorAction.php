@@ -14,15 +14,12 @@ class FetchTodayAppointmentForDoctorAction
 {
     use HttpResponses;
 
-    public function __invoke()
+    public function __invoke(): Appointment
     {
-        $today = Carbon::today();
+        $today = Carbon::now()->format('Y-m-d');
         $user = User::where('id', Auth::id())->first();
         $doctorId = $user->doctor->id;
-        $appiontments = Appointment::where('appointment_date' , $today )->where('doctor_id',$doctorId)->get();
-        return $appiontments;
-
-    //    return $doctorId;
+        $appointments = Appointment::where('appointment_date', $today)->where('doctor_id', $doctorId)->get();
+        return $appointments;
     }
-
 }
