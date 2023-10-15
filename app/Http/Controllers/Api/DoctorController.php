@@ -2,16 +2,26 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\User;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DoctorRequest;
+use App\Http\Resources\UserResource;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\DoctorResource;
+use App\Http\Resources\HospitalResource;
+use Illuminate\Support\Facades\Validator;
 use App\UseCases\Doctors\EditDoctorAction;
+use App\Http\Resources\AppointmentResource;
 use App\UseCases\Doctors\FetchDoctorAction;
+use App\UseCases\Doctors\GetPatientsAction;
 use App\UseCases\Doctors\StoreDoctorAction;
 use App\UseCases\Doctors\DeleteDoctorAction;
+use App\UseCases\Doctors\GetHospitalsAction;
+use App\UseCases\Doctors\ProfileUpdateAction;
+use App\UseCases\Doctors\GetAppointmentsAction;
 
 class DoctorController extends Controller
 {
@@ -61,5 +71,65 @@ class DoctorController extends Controller
     {
         (new DeleteDoctorAction)($doctor);
         return $this->success('Successfully Deleted', null);
+    }
+
+    
+    public function updateProfile(Request $request, User $doctor)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'phone' => 'required|min:11|max:14|unique:users,phone,' . $doctor->id,
+            'email' => 'required|email|unique:users,email,' . $doctor->id,
+            'address' => 'nullable',
+            'password' => 'nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return $this->error($validator->errors()->first(), null, 422);
+        }
+
+        $formData = [
+            "name" => $request->name,
+            "email" => $request->email,
+            "phone" => $request->phone,
+            "address" => $request->address,
+            "password" => $request->password ? Hash::make($request->password) : $doctor->password,
+        ];
+
+        $doctor = (new ProfileUpdateAction)($formData, $doctor);
+        return $this->success('Successfully updated.', [
+            'user' => [
+                'id' => $doctor->id,
+                'name' => $doctor->name,
+                'email' => $doctor->email,
+                'phone' => $doctor->phone,
+                'address' => $doctor->address,
+                'role' => $doctor->role,
+            ]
+        ], 200);
+    }
+
+    public function hospitals()
+    {
+        $result = (new GetHospitalsAction)();
+        return response()->json([
+            'data' => HospitalResource::collection($result['data']),
+        ]);
+    }
+
+    public function patients()
+    {
+        $result = (new GetPatientsAction)();
+        return response()->json([
+            'data' => UserResource::collection($result['data']),
+        ]);
+    }
+
+    public function appointments(User $user)
+    {
+        $result = (new GetAppointmentsAction)();
+        return response()->json([
+            'data' => AppointmentResource::collection($result['data']),
+        ]);
     }
 }
