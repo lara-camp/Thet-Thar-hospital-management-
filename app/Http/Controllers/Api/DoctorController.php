@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Doctor;
-use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
+use App\Exports\AppointmentExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DoctorRequest;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Resources\DoctorResource;
 use App\UseCases\Doctors\EditDoctorAction;
 use App\UseCases\Doctors\FetchDoctorAction;
@@ -61,5 +62,10 @@ class DoctorController extends Controller
     {
         (new DeleteDoctorAction)($doctor);
         return $this->success('Successfully Deleted', null);
+    }
+
+    public function exportAppointment()
+    {
+        return Excel::download(new AppointmentExport(), 'appointment.xlsx');
     }
 }
