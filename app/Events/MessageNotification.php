@@ -32,7 +32,12 @@ class MessageNotification implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('notification'),
+            'notification'
         ];
+    }
+
+    public function broadcastAs(): string
+    {
+        return "private_msg";
     }
 }

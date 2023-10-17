@@ -32,7 +32,14 @@ class MessageSending implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('message'.$this->message->booking_id),
+          // 'message.' . $this->message->booking_id,
+            new Channel('message.'.$this->message->booking_id),
         ];
+    }
+
+
+    public function broadcastAs(): string
+    {
+        return 'fresher';
     }
 }

@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Models\Patient;
+use App\Traits\HttpResponses;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PatientRequest;
 use App\Http\Resources\PatientResource;
-use App\Models\Doctor;
-use App\Models\Patient;
-use App\Traits\HttpResponses;
-use App\UseCases\Patients\DeletePatientAction;
 use App\UseCases\Patients\EditPatientAction;
 use App\UseCases\Patients\FetchPatientAction;
-use Illuminate\Http\Request;
+use App\UseCases\Patients\DeletePatientAction;
 
 class PatientController extends Controller
 {
@@ -20,7 +19,7 @@ class PatientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $result = (new FetchPatientAction)();
         return response()->json([
@@ -32,7 +31,7 @@ class PatientController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Patient $patient)
+    public function show(Patient $patient): JsonResponse
     {
         return $this->success('Data fetched successfully.', $patient);
     }
@@ -40,7 +39,7 @@ class PatientController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(PatientRequest $request, Patient $patient)
+    public function update(PatientRequest $request, Patient $patient): JsonResponse
     {
         $patient = (new EditPatientAction)($request->all(), $patient);
         return $this->success('Successfully updated.', $patient);
@@ -49,7 +48,7 @@ class PatientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Patient $patient)
+    public function destroy(Patient $patient): JsonResponse
     {
         (new DeletePatientAction)($patient);
         return $this->success('Successfully Deleted', null);

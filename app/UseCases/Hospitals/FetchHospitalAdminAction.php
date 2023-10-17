@@ -13,7 +13,7 @@ class FetchHospitalAdminAction
 {
     use HttpResponses;
 
-    public function __invoke($hospital_id)
+    public function __invoke($hospital_id): Hospital
     {
 
         $data = Hospital::with('admin')->where('id', $hospital_id)->first();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Appointment;
+use App\UseCases\Doctors\FetchTodayAppointmentForDoctorAction;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
@@ -15,12 +16,15 @@ use App\UseCases\Doctors\FetchAppointmentTimeAction;
 use App\UseCases\Appointments\FetchAppointmentAction;
 use App\UseCases\Appointments\StoreAppointmentAction;
 use App\UseCases\Appointments\DeleteAppointmentAction;
+use App\UseCases\Appointments\UpdateForLeaveChatAction;
 
 class AppointmentController extends Controller
 {
     use HttpResponses;
 
-
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $result = (new FetchAppointmentAction)();
@@ -65,6 +69,7 @@ class AppointmentController extends Controller
         return $this->success('Successfully Deleted', null);
     }
 
+    //Check Appointment
     public function checkAppointment(Request $request)
     {
         $formData = $request->all();
@@ -73,11 +78,28 @@ class AppointmentController extends Controller
         return $this->success($result['msg'], $result['booking_id']);
     }
 
+    //Get Appointment Time
     public function appointmentsTime($doctorId)
     {
         $result = (new FetchAppointmentTimeAction)($doctorId);
         return response()->json([
             'data' => AppointmentTimeResource::collection($result)
         ]);
+    }
+
+    //Get Today Appointment For Doctor
+    public function todayAppointmentForDoctor()
+    {
+        $result = (new FetchTodayAppointmentForDoctorAction())();
+        return response()->json([
+            'data' =>   AppointmentResource::collection($result)
+        ]);
+    }
+
+    //Leave Chat
+    public function leaveChat($bookingId)
+    {
+        (new UpdateForLeaveChatAction)($bookingId);
+        return $this->success('Leave Successfully.', null);
     }
 }

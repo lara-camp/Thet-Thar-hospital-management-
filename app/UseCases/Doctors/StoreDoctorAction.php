@@ -16,7 +16,6 @@ class StoreDoctorAction
         $pivot = HospitalDoctor::create([
             'hospital_id' => $formData['hospital_id'],
             'doctor_id' => $doctor->id,
-            'checkin_time' => $formData['duty_start_time'],
         ]);
 
         if (request()->has('image')) {
