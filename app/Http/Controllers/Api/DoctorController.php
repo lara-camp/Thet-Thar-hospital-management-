@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use App\Models\Doctor;
-use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
+use App\Exports\AppointmentExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DoctorRequest;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\DoctorResource;
@@ -73,6 +74,9 @@ class DoctorController extends Controller
         return $this->success('Successfully Deleted', null);
     }
 
+    public function exportAppointment()
+    {
+        return Excel::download(new AppointmentExport(), 'appointment.xlsx');
     
     public function updateProfile(Request $request, User $doctor)
     {
