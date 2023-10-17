@@ -52,5 +52,29 @@ Copy `.env.example` to `.env` and set the environment variables.
 You can follow this link for frondend code if you want .
 [Frontend](https://github.com/SpringArts/HospitalManagement-fe)
 
+###Login Account
 
+-For Superadmin
+```sh
+superadmin@gmail.com
+12345678
+```
+
+-For Hospital Admin
+```sh
+hospitalone@gmail.com
+12345678
+```
+
+-For Doctor
+```sh
+doctorone@gmail.com
+12345678
+```
+
+-For Patient
+```sh
+patientone@gmail.com
+12345678
+```
 
