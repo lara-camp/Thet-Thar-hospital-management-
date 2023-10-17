@@ -54,25 +54,25 @@ You can follow this link for frondend code if you want .
 
 ###Login Account
 
--For Superadmin
+- For Superadmin
 ```sh
 superadmin@gmail.com
 12345678
 ```
 
--For Hospital Admin
+- For Hospital Admin
 ```sh
 hospitalone@gmail.com
 12345678
 ```
 
--For Doctor
+- For Doctor
 ```sh
 doctorone@gmail.com
 12345678
 ```
 
--For Patient
+- For Patient
 ```sh
 patientone@gmail.com
 12345678
