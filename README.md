@@ -2,7 +2,7 @@
 
 This is a Hospital Management System developed by Team Fresher. We use laravel breeze , sanctum and next js for frontend.
 
-## The Functions We Fight
+## The Functions We Fought
 1. CRUD
 2. Realtime chatting
 3. Excel export
