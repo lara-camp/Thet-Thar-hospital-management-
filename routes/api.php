@@ -57,13 +57,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/hospital/{hospitalId}/head', [HospitalController::class, 'headInfo']);
     Route::get('/dashboard/hospital/{hospitalId}', [HospitalController::class, 'dashboardData']);
     Route::put('/dashboard/{hospitalId}/head', [HospitalController::class, 'updateHead']);
+    Route::get('/appointment/export', [DoctorController::class, 'exportAppointment']);
     Route::get('/fetch-hospital', [UserController::class, 'fetchUserHospital']); //fetch the user of hospital if user is HospitalAdmin
 
-        // Doctor Dashboard
-        Route::get('/dashboard/doctor/{doctor}/hospitals', [DoctorController::class, 'hospitals']);
-        Route::get('/dashboard/doctor/{doctor}/patients', [DoctorController::class, 'patients']);
-        Route::post('/dashboard/doctor/{doctor}/update', [DoctorController::class, 'updateProfile']);
-        Route::get('/dashboard/doctor/{doctor}/appointments', [DoctorController::class, 'appointments']);
+    // Doctor Dashboard
+    Route::get('/dashboard/doctor/{doctor}/counts', [DoctorController::class, 'counts']);
+    Route::get('/dashboard/doctor/{doctor}/hospitals', [DoctorController::class, 'hospitals']);
+    Route::get('/dashboard/doctor/{doctor}/patients', [DoctorController::class, 'patients']);
+    Route::post('/dashboard/doctor/{doctor}/update', [DoctorController::class, 'updateProfile']);
+    Route::get('/dashboard/doctor/{doctor}/appointments', [DoctorController::class, 'appointments']);
 });
 
 
