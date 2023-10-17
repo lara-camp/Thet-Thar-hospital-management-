@@ -42,7 +42,6 @@ class DoctorController extends Controller
      */
     public function store(DoctorRequest $request): \Illuminate\Http\JsonResponse
     {
-
         (new StoreDoctorAction)($request->all());
         return $this->success('Successfully inserted.', null, 201);
     }
@@ -73,7 +72,7 @@ class DoctorController extends Controller
         return $this->success('Successfully Deleted', null);
     }
 
-    
+
     public function updateProfile(Request $request, User $doctor)
     {
         $validator = Validator::make($request->all(), [
