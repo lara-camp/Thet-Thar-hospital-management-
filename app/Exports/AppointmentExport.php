@@ -12,7 +12,7 @@ class AppointmentExport implements FromCollection
      */
     public function collection()
     {
-        $data = Appointment::with('doctor', 'patient')->where('doctor_id', auth()->user()->id)->get();
+        $data = Appointment::with('doctor', 'patient')->where('doctor_id', auth()->user()->doctor->id)->get();
         return collect($data);
     }
 }

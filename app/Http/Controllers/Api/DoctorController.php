@@ -4,13 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use App\Models\Doctor;
+use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Exports\AppointmentExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DoctorRequest;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Resources\DoctorResource;
 use App\Http\Resources\HospitalResource;
 use Illuminate\Support\Facades\Validator;
@@ -30,7 +31,7 @@ class DoctorController extends Controller
     use HttpResponses;
 
 
-    public function counts (User $doctor) 
+    public function counts(User $doctor)
     {
         $appointmentCount = Doctor::with('appointments')->where('id', $doctor->doctor->id)->first()->appointments()->count();
         $hospitalCount = Doctor::with('hospitals')->where('id', $doctor->doctor->id)->firstOrFail()->hospitals()->count();
@@ -41,13 +42,13 @@ class DoctorController extends Controller
             $patients = $patients->add(($value->userInfo));
         }
         $patientCount = $patients->count();
-        
+
         return response()->json([
             'hospital' => $hospitalCount,
             'patient' => $patientCount,
             'appointment' => $appointmentCount,
         ]);
-    } 
+    }
 
     public function index(): \Illuminate\Http\JsonResponse
     {
@@ -96,7 +97,8 @@ class DoctorController extends Controller
     public function exportAppointment()
     {
         return Excel::download(new AppointmentExport(), 'appointment.xlsx');
-    
+    }
+
     public function updateProfile(Request $request, User $doctor)
     {
         $validator = Validator::make($request->all(), [
