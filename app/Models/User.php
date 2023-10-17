@@ -23,6 +23,8 @@ class User extends Authenticatable
         'password',
         'email',
         'phone',
+        'gauth_id',
+        'gauth_type',
         'address',
         'role',
         'is_visible',
@@ -38,7 +40,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'password',
         'remember_token',
+        'two_factor_recovery_codes',
+        'two_factor_secret',
+    ];
+
+    protected $appends = [
+        'profile_photo_url',
     ];
 
     /**

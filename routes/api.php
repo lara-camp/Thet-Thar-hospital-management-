@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginLogoutController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
+use App\Http\Controllers\Api\Auth\LoginWithGoogle;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,9 @@ use App\Http\Controllers\Api\Auth\ForgotPasswordController;
 
 
 Route::post('/login', [LoginLogoutController::class, 'login']);
+Route::get('/auth/google', [LoginWithGoogle::class, 'loginWithGoogle']);
+Route::get('/callback/google', [LoginWithGoogle::class, 'callbackToGoogle']);
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [LoginLogoutController::class, 'logout']);
     Route::apiResource('/users', UserController::class);

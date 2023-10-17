@@ -14,7 +14,6 @@ class LoginLogoutController extends Controller
 {
     use HttpResponses;
 
-    //Login Method
     public function login(Request $request)
     {
         try {

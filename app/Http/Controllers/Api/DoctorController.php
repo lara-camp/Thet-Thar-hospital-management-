@@ -63,7 +63,6 @@ class DoctorController extends Controller
      */
     public function store(DoctorRequest $request): \Illuminate\Http\JsonResponse
     {
-
         (new StoreDoctorAction)($request->all());
         return $this->success('Successfully inserted.', null, 201);
     }

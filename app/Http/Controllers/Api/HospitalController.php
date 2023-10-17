@@ -38,6 +38,7 @@ class HospitalController extends Controller
      */
     public function store(HospitalRequest $request): JsonResponse
     {
+        $this->authorize('create',Hospital::class);
         (new StoreHospitalAction())($request->all());
         return $this->success('Inserted hospital successfully.', null, 201);
     }
@@ -47,6 +48,7 @@ class HospitalController extends Controller
      */
     public function show(Hospital $hospital): JsonResponse
     {
+        $this->authorize('view',$hospital);
         return $this->success('Fetched hospital successfully.', new HospitalResource($hospital));
     }
 
@@ -55,6 +57,7 @@ class HospitalController extends Controller
      */
     public function update(HospitalRequest $request, Hospital $hospital): JsonResponse
     {
+        $this->authorize('update',$hospital);
         $hospital = (new EditHospitalAction())($request->all(), $hospital);
         return $this->success('Updated hospital successfully.',  new HospitalResource($hospital));
     }
@@ -62,6 +65,7 @@ class HospitalController extends Controller
     //Delete Hospital
     public function destroy(Hospital $hospital): JsonResponse
     {
+        $this->authorize('delete',$hospital);
         (new DeleteHospitalAction())($hospital);
         return $this->success('Hospital deleted successfully.', null);
     }
