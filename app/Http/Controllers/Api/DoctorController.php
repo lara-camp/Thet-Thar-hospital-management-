@@ -21,6 +21,7 @@ use App\UseCases\Doctors\GetPatientsAction;
 use App\UseCases\Doctors\StoreDoctorAction;
 use App\UseCases\Doctors\DeleteDoctorAction;
 use App\UseCases\Doctors\GetHospitalsAction;
+use Illuminate\Database\Eloquent\Collection;
 use App\UseCases\Doctors\ProfileUpdateAction;
 use App\UseCases\Doctors\GetAppointmentsAction;
 
@@ -28,6 +29,25 @@ class DoctorController extends Controller
 {
     use HttpResponses;
 
+
+    public function counts (User $doctor) 
+    {
+        $appointmentCount = Doctor::with('appointments')->where('id', $doctor->doctor->id)->first()->appointments()->count();
+        $hospitalCount = Doctor::with('hospitals')->where('id', $doctor->doctor->id)->firstOrFail()->hospitals()->count();
+
+        $patients = new Collection([]);
+        $data = Doctor::with('patients')->where('id', $doctor->doctor->id)->firstOrFail()->patients;
+        foreach ($data as $value) {
+            $patients = $patients->add(($value->userInfo));
+        }
+        $patientCount = $patients->count();
+        
+        return response()->json([
+            'hospital' => $hospitalCount,
+            'patient' => $patientCount,
+            'appointment' => $appointmentCount,
+        ]);
+    } 
 
     public function index(): \Illuminate\Http\JsonResponse
     {
