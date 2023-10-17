@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Auth;
 
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
+use Illuminate\Http\JsonResponse;
+use App\UseCases\Auth\LoginAction;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -46,7 +48,8 @@ class LoginLogoutController extends Controller
         }
     }
 
-    public function logout()
+    //Logout Method
+    public function logout(): JsonResponse
     {
         $user = auth()->user();
         $user->tokens()->delete();

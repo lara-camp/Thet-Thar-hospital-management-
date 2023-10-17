@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string("email_verification_token")->nullable();
             $table->string('password');
-            $table->enum('role', ['superAdmin', 'admin', 'patient', 'doctor', 'guest'])->default('guest');
+            $table->enum('role', ['superAdmin', 'hospitalAdmin', 'patient', 'doctor', 'guest'])->default('guest');
             $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->boolean('is_visible')->default(true);

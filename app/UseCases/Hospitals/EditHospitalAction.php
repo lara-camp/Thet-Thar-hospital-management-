@@ -15,6 +15,7 @@ class EditHospitalAction
             $hospital->images()->delete();
         }
         $hospital->update($formData);
+
         return $hospital;
     }
 }

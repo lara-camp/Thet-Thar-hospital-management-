@@ -16,7 +16,9 @@ class AppointmentResource extends JsonResource
     {
         return [
             'id'      => $this->id,
-            'patientName'    => $this->patient->userInfo->name ?? null,
+            'patientId'    => $this->userInfo->id ?? null,
+            'doctorId'    => $this->doctor->userInfo->id ?? null,
+            'patientName'    => $this->userInfo->name ?? null,
             'doctorName'   => $this->doctor->userInfo->name ?? null,
             'bookingId' => $this->booking_id ?? null,
             'doctorLocation' => $this->doctor->hospitals->pluck('location') ?? null,

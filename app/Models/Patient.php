@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Patient extends Model
 {
     use HasFactory;
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     public function doctors()
     {
@@ -21,5 +21,9 @@ class Patient extends Model
     public function userInfo()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
+    }
+    public function hospital()
+    {
+        return $this->belongsTo(Hospital::class, 'hospital_id');
     }
 }

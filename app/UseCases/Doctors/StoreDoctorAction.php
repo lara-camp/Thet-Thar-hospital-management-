@@ -4,6 +4,7 @@ namespace App\UseCases\Doctors;
 
 use App\Models\Doctor;
 use App\Helpers\FileHelper;
+use App\Models\HospitalDoctor;
 use Carbon\Carbon;
 
 class StoreDoctorAction
@@ -11,6 +12,11 @@ class StoreDoctorAction
     public function __invoke($formData): int
     {
         $doctor = Doctor::create($formData);
+
+        $pivot = HospitalDoctor::create([
+            'hospital_id' => $formData['hospital_id'],
+            'doctor_id' => $doctor->id,
+        ]);
 
         if (request()->has('image')) {
             $fileName = FileHelper::fileMover($formData['image']);
@@ -35,6 +41,12 @@ class StoreDoctorAction
             // Increment the appointment time by the specified interval
             $appointmentTime->addMinutes($interval);
         }
+
+        $doctor->userInfo->update(
+            [
+                'role' => 'doctor',
+            ]
+        );
         return 201;
     }
 }

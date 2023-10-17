@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Mail\VerificationEmail;
 use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Mail\VerificationEmail;
+use Illuminate\Http\JsonResponse;
+use App\UseCases\Auth\VerifyAction;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Redirect;
 
 class RegisterController extends Controller
 {
-    public function register(Request $request)
+    public function register(Request $request): JsonResponse //Register Method
     {
         $request->validate([
             'name' => 'required|string|max:50|min:3',
@@ -40,14 +42,14 @@ class RegisterController extends Controller
         ]);
     }
 
-    public function verify($id, $hash)
+    public function verify(int $id, string $hash): JsonResponse //Verify Method
     {
         $user = User::where('id', $id)->where('email_verification_token', $hash)->first();
 
         if ($user) {
             $user->markEmailAsVerified();
 
-            return Redirect::to("https://google.com");
+            return Redirect::to("http://localhost:3000/auth/login");
         } else {
             return response()->json([
                 'message' => 'Invalid verification link.',

@@ -9,7 +9,7 @@ class Doctor extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected $guarded = [];
 
     public function images()
     {
@@ -23,17 +23,17 @@ class Doctor extends Model
 
     public function hospitals()
     {
-        return $this->belongsToMany(Hospital::class, 'hospital_doctors', 'doctor_id', 'hospital_id');
+        return $this->belongsToMany(Hospital::class, 'hospital_doctor', 'doctor_id', 'hospital_id');
     }
 
     public function department()
     {
-        return $this->hasOne(Department::class,  'id');
+        return $this->belongsTo(Department::class,  'department_id');
     }
 
     public function appointments()
     {
-        return $this->hasMany(Appointment::class, 'doctor_id');
+        return $this->hasMany(Appointment::class, 'id');
     }
 
     public function userInfo()

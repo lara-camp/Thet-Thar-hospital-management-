@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Hospital;
-use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
+use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\HospitalRequest;
 use App\Http\Resources\DoctorResource;
@@ -13,7 +13,10 @@ use App\UseCases\Hospitals\EditHospitalAction;
 use App\UseCases\Hospitals\FetchHospitalAction;
 use App\UseCases\Hospitals\StoreHospitalAction;
 use App\UseCases\Hospitals\DeleteHospitalAction;
+use App\UseCases\Hospitals\FetchDashboardDataAction;
+use App\UseCases\Hospitals\FetchHospitalAdminAction;
 use App\UseCases\Hospitals\FetchHospitalDoctorAction;
+use App\UseCases\Hospitals\UpdateHospitalAdminAction;
 
 class HospitalController extends Controller
 {
@@ -21,10 +24,10 @@ class HospitalController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
         $result = (new FetchHospitalAction())();
-        return $this->success('Fetched hospitals successfully.', [
+        return response()->json([
             'data' => HospitalResource::collection($result['data']),
             'meta' => $result['meta']
         ]);
@@ -33,8 +36,9 @@ class HospitalController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(HospitalRequest $request)
+    public function store(HospitalRequest $request): JsonResponse
     {
+        $this->authorize('create',Hospital::class);
         (new StoreHospitalAction())($request->all());
         return $this->success('Inserted hospital successfully.', null, 201);
     }
@@ -42,36 +46,62 @@ class HospitalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Hospital $hospital)
+    public function show(Hospital $hospital): JsonResponse
     {
-        return $this->success('Fetched hospital successfully.', ['data' => new HospitalResource($hospital)]);
+        $this->authorize('view',$hospital);
+        return $this->success('Fetched hospital successfully.', new HospitalResource($hospital));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(HospitalRequest $request, Hospital $hospital)
+    public function update(HospitalRequest $request, Hospital $hospital): JsonResponse
     {
-        // return $request->all();
+        $this->authorize('update',$hospital);
         $hospital = (new EditHospitalAction())($request->all(), $hospital);
-        return $this->success('Updated hospital successfully.', ['data' => new HospitalResource($hospital)]);
+        return $this->success('Updated hospital successfully.',  new HospitalResource($hospital));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Hospital $hospital)
+    //Delete Hospital
+    public function destroy(Hospital $hospital): JsonResponse
     {
+        $this->authorize('delete',$hospital);
         (new DeleteHospitalAction())($hospital);
         return $this->success('Hospital deleted successfully.', null);
     }
 
-    public function hospitalDoctors($id)
+    //Get Hospital Doctors
+    public function hospitalDoctors($id): JsonResponse
     {
         $result = (new FetchHospitalDoctorAction())($id);
-        return $this->success('Fetched hospital doctors successfully.', [
+        return response()->json([
             'data' => DoctorResource::collection($result['data']),
             'meta' => $result['meta']
         ]);
+    }
+
+    //Get Hospital Dashboard Data
+    public function dashboardData($id): JsonResponse
+    {
+        $result = (new FetchDashboardDataAction())($id);
+        return response()->json([
+            'data' => $result
+        ]);
+    }
+
+    //Get Hospital Headmaster
+    public function headInfo(int $hospitalId): JsonResponse
+    {
+        $result = (new FetchHospitalAdminAction)($hospitalId);
+        return response()->json([
+            'data' => $result
+        ]);
+    }
+
+    //Update Hospital Headmaster
+    public function updateHead(Hospital $hospitalId): JsonResponse
+    {
+        (new UpdateHospitalAdminAction)($hospitalId);
+        return $this->success('Updated hospital head successfully.', null);
     }
 }

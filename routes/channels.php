@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
-    return (int) $user->id === (int) $id;
-});
+//ee
+
+//Broadcast::channel('message.{booking_id}', function ($user, $message) {
+//    return $user->id == $message->sender_id || $user->id == $message->receiver_id;
+//});

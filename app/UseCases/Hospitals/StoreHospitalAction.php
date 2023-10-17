@@ -6,18 +6,16 @@ namespace App\UseCases\Hospitals;
 use App\Helpers\FileHelper;
 use App\Models\Hospital;
 use App\Traits\HttpResponses;
+use Illuminate\Support\Facades\Auth;
 
 class StoreHospitalAction
 {
     use HttpResponses;
     public function __invoke($formData): int
     {
-//        $fileName = FileHelper::fileMover($formData['image']);
-        $hospital = Hospital::create($formData);
-        // Create an Image model and associate it with the hospital using morphTo
-//        $hospital->images()->create([
-//            'url' =>  config('folderName') . '/' . $fileName, // Adjust the path as needed
-//        ]);
+        $formData['user_id'] = $formData['user_id'] ?? Auth::id();
+        Hospital::create($formData);
+
         return 201;
     }
 }
