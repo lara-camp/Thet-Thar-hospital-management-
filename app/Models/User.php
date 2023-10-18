@@ -46,9 +46,9 @@ class User extends Authenticatable
         'two_factor_secret',
     ];
 
-    protected $appends = [
-        'profile_photo_url',
-    ];
+    // protected $appends = [
+    //     'profile_photo_url',
+    // ];
 
     /**
      * The attributes that should be cast.
