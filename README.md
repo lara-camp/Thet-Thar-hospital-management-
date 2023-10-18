@@ -78,3 +78,7 @@ patientone@gmail.com
 12345678
 ```
 
+### For Mail Setup 
+
+ You need to setup your own mail address . If you don't want you can test from this .[mailtrap](https://mailtrap.io/)
+We setup with this in .env and we also uploaded that file . 
