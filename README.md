@@ -10,6 +10,7 @@ This is a Hospital Management System developed by Team Fresher. We use laravel b
 5. Appointment processing between Patient and Doctor
 6. Data Filter
 7. Authentication and Authorization (Laravel Breeze and policy)
+8. Log Monthly Rotation (command and scheduler)
 
 
 ## Recommended IDE Setup for local
