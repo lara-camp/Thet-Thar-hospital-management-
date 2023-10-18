@@ -33,27 +33,28 @@ class  ForgotPasswordController extends Controller
     public function resetNewPassword(Request $request) //Reset Password   {
     {
         $request->validate([
-            'name' => 'required|string|max:50|min:3',
-            'email' => 'required|email|unique:users,email',
-            'password' => [
-                'required',
-                Password::min(5)->letters()
-            ]
+            'code' => 'required|string|exists:reset_code_passwords',
+            'password' => 'required|string|min:6|confirmed',
         ]);
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->email_verification_token = Str::uuid()->toString();
+        // find the code
+        $passwordReset = ResetCodePassword::firstWhere('code', $request->code);
 
-        $user->save();
+        // check if it does not expired: the time is one hour
+        if ($passwordReset->created_at > now()->addHour()) {
+            $passwordReset->delete();
+            return response(['message' => trans('passwords.code_is_expire')], 422);
+        }
 
-        Mail::to($user->email)->send(new VerificationEmail($user));
+        // find user's email
+        $user = User::firstWhere('email', $passwordReset->email);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Please check your email , you email has been verified .',
-        ]);
+        // update user password
+        $user->update($request->only('password'));
+
+        // delete current code
+        $passwordReset->delete();
+
+        return response(['message' => 'password has been successfully reset'], 200);
     }
 }

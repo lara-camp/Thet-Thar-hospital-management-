@@ -10,7 +10,7 @@ class FetchUserHospitalAction
 {
     use HttpResponses;
 
-    public function __invoke(): int
+    public function __invoke(): int|null
     {
         $hospitalId = Hospital::where('user_id', auth()->user()->id)->value('id');
         return $hospitalId;
