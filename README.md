@@ -33,23 +33,23 @@ php artisan key:generate
 php artisan migrate
 ```
 
-### running 
+### To Run 
 
 ```sh
 php artisan serve
 ```
 
-## API Documentation
+## API EndPoints
 You can check the  API documentation below.  
  [postman](https://lively-crater-677764.postman.co/workspace/LMA~4936dc03-b87a-4b87-b653-22a314bdd5c9/collection/7575557-b858b49a-b84f-4962-bd4c-45106d4f660a?action=share&creator=7575557&active-environment=7575557-5ae7ec5d-7d37-453b-bf23-6ad16d03e69f) 
 
-## Environment Varibles
+## Environment Varibles (optional)
 
 Copy `.env.example` to `.env` and set the environment variables.
 
 ## Frontend code 
 
-You can follow this link for frondend code if you want .
+You can follow this link for frontend code if you want . You can download code from any branch.
 [Frontend](https://github.com/SpringArts/HospitalManagement-fe)
 
 ## Login Account
