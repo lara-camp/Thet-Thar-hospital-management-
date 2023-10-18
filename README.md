@@ -5,7 +5,7 @@ This is a Hospital Management System developed by Team Fresher. We use laravel b
 ## The Functions We Fought
 1. CRUD
 2. Realtime chatting
-3. Excel export
+3. Excel,CSV export
 4. Mail sending function
 5. Appointment processing between Patient and Doctor
 6. Data Filter
