@@ -20,7 +20,7 @@ return new class extends Migration
             [
                 'id' => 1,
                 'name' => 'HospitalAdminOne',
-                'email' => 'hospitalone@gmail.com',
+                'email' => 'aungzawphyo1102@gmail.com',
                 'email_verified_at' => now(),
                 'password' => '$2y$10$/wQTKHDVTKcZXxqvgXHR5.yOr6vjBkHoErWrI0vhnHCs6rhF8LTRW',
                 'remember_token' => Str::random(10),
@@ -70,7 +70,7 @@ return new class extends Migration
             [
                 'id' => 6,
                 'name' => 'PatientOne',
-                'email' => 'patientone@gmail.com',
+                'email' => 'albert.einstein.beta@gmail.com',
                 'email_verified_at' => now(),
                 'password' => '$2y$10$/wQTKHDVTKcZXxqvgXHR5.yOr6vjBkHoErWrI0vhnHCs6rhF8LTRW',
                 'remember_token' => Str::random(10),
