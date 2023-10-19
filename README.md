@@ -82,4 +82,13 @@ patientone@gmail.com
 ### For Mail Setup 
 
  You need to setup your own mail address . If you don't want you can test from this .[mailtrap](https://mailtrap.io/)
-We setup with this in .env and we also uploaded that file . 
+We setup with this in .env and we also uploaded that file . If we want to this real time mail setup , you can test with this .
+```sh
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.gmail.com
+MAIL_PORT=587
+MAIL_USERNAME=happy.friday.helloworld@gmail.com
+MAIL_PASSWORD=loelzxxdpbcldzpz
+MAIL_ENCRYPTION=tls
+MAIL_FROM_NAME="${APP_NAME}"
+```
