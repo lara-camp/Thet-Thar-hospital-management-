@@ -19,9 +19,8 @@ use Illuminate\Http\JsonResponse;
 class UserController extends Controller
 {
     use HttpResponses;
-    /**
-     * Display a listing of the resource.
-     */
+
+    //Display a listing of the resource.
     public function index(): JsonResponse
     {
         $result = (new FetchUserAction)();
@@ -31,37 +30,34 @@ class UserController extends Controller
         ]);
     }
 
+    //Store User
     public function store(UserRequest $request): JsonResponse
     {
         (new StoreUserAction())($request->all());
         return $this->success('Inserted hospital successfully.', null, 201);
     }
-    /**
-     * Display the specified resource.
-     */
+
+    //Display the specified resource.
     public function show(User $user): JsonResponse
     {
         return $this->success('Data fetched successfully.', $user);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    //Update the specified User Info.
     public function update(UserRequest $request, User $user): JsonResponse
     {
         $user = (new EditUserAction)($request->all(), $user);
         return $this->success('Successfully updated.', $user);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    //Delete User
     public function destroy(User $user): JsonResponse
     {
         (new DeleteUserAction)($user);
         return $this->success('Successfully Deleted', null);
     }
 
+    //Fetch User Hospital
     public function fetchUserHospital(): JsonResponse
     {
         $result = (new FetchUserHospitalAction)();

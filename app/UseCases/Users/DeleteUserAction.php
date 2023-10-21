@@ -8,7 +8,6 @@ use App\Traits\HttpResponses;
 
 class DeleteUserAction
 {
-    use HttpResponses;
     public function __invoke($user): int
     {
         $deleteData = User::where('id', $user->user_id)->firstOrFail();

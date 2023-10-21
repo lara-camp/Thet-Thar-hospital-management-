@@ -12,6 +12,7 @@ use App\Http\Resources\DepartmentResource;
 use App\UseCases\Department\FetchDepartmentAction;
 use App\UseCases\Department\StoreDepartmentAction;
 use App\UseCases\Department\DeleteDepartmentAction;
+use App\UseCases\Department\FetchAllDepartmentAction;
 use App\UseCases\Department\UpdateDepartmentAction;
 use App\UserCases\Hospitals\SearchHospitalByDepartment;
 
@@ -36,9 +37,6 @@ class DepartmentController extends Controller
 
     public function update(Request $request, Department $department): JsonResponse
     {
-        $request->validate([
-            'name' => 'required|min:2|max:100'
-        ]);
         $update = (new UpdateDepartmentAction)($request->all(), $department);
         return $this->success('Successfully updated.', $update);
     }
@@ -53,5 +51,13 @@ class DepartmentController extends Controller
     {
         $hospitals = (new SearchHospitalByDepartment)();
         return $this->success('Fetched hospitals by department.', ['hospitals' => HospitalResource::collection($hospitals->unique('id'))]);
+    }
+
+    public function fetchAllDepartments(): JsonResponse
+    {
+        $departments = (new FetchAllDepartmentAction)();
+        return response()->json([
+            'data' => DepartmentResource::collection($departments),
+        ]);
     }
 }

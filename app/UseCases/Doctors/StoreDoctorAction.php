@@ -11,42 +11,58 @@ class StoreDoctorAction
 {
     public function __invoke($formData): int
     {
-        $doctor = Doctor::create($formData);
+        $doctor = $this->createDoctor($formData);
+        $this->createHospitalDoctorPivot($formData['hospital_id'], $doctor->id);
+        $this->uploadImage($formData, $doctor);
+        $this->createAppointmentTimes($formData, $doctor);
+        $this->updateDoctorRole($doctor->userInfo);
 
-        $pivot = HospitalDoctor::create([
-            'hospital_id' => $formData['hospital_id'],
-            'doctor_id' => $doctor->id,
+        return 201;
+    }
+
+    private function createDoctor($formData)
+    {
+        return Doctor::create($formData);
+    }
+
+    private function createHospitalDoctorPivot($hospitalId, $doctorId)
+    {
+        HospitalDoctor::create([
+            'hospital_id' => $hospitalId,
+            'doctor_id' => $doctorId,
         ]);
+    }
 
-        if (request()->has('image')) {
+    private function uploadImage($formData, $doctor)
+    {
+        if (isset($formData['image'])) {
             $fileName = FileHelper::fileMover($formData['image']);
             $doctor->images()->create([
-                'url' =>  config('folderName') . '/' . $fileName, // Adjust the path as needed
+                'url' => config('folderName') . '/' . $fileName,
             ]);
         }
-        // Create appointment times based on duty start and end times
-        $dutyStartTime = Carbon::parse($formData['duty_start_time']); // Assuming 'duty_start_time' is in a valid time format
-        $dutyEndTime = Carbon::parse($formData['duty_end_time']); // Assuming 'duty_end_time' is in a valid time format
+    }
 
+    private function createAppointmentTimes($formData, $doctor)
+    {
+        $startTime = Carbon::parse($formData['duty_start_time']);
+        $endTime = Carbon::parse($formData['duty_end_time']);
         $interval = 30; // 30 minutes interval, you can adjust this as needed
-        $appointmentTime = $dutyStartTime->copy();
 
-        while ($appointmentTime <= $dutyEndTime) {
-            // Create an appointment entry in the appointment_time table
+        while ($startTime <= $endTime) {
             $doctor->appointmentTimes()->create([
                 'doctor_id' => $doctor->id,
-                'appointment_time' => $appointmentTime->format('H:i'), // Format time as 'HH:mm'
+                'appointment_time' => $startTime->format('H:i'),
             ]);
 
-            // Increment the appointment time by the specified interval
-            $appointmentTime->addMinutes($interval);
+            $startTime->addMinutes($interval);
         }
+    }
 
-        $doctor->userInfo->update(
-            [
-                'role' => 'doctor',
-            ]
-        );
-        return 201;
+    private function updateDoctorRole($userInfo)
+    {
+        $userInfo->update([
+            'role' => 'doctor',
+        ]);
     }
 }

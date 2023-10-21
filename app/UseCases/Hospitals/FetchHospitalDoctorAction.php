@@ -22,7 +22,6 @@ class FetchHospitalDoctorAction
         $perPage = $validated['perPage'] ?? 5;
 
         $data = Doctor::where('hospital_id', $hospital_id)
-//            ->where('is_visible', true)
             ->when(request('keyword'), function ($query, $keyword) {
                 $query->whereHas('userInfo', function ($userQuery) use ($keyword) {
                     $userQuery->where('name', 'like', "%$keyword%");
@@ -30,7 +29,6 @@ class FetchHospitalDoctorAction
             })
             ->paginate($perPage, ['*'], 'page', $page)
             ->withQueryString();
-
 
         $meta = $this->getPaginationMeta($data);
         return [
