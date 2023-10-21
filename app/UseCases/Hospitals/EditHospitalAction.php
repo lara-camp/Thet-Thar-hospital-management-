@@ -8,7 +8,6 @@ use App\Traits\HttpResponses;
 
 class EditHospitalAction
 {
-    use HttpResponses;
     public function __invoke($formData, $hospital): Hospital
     {
         if (request()->hasFile('image')) {

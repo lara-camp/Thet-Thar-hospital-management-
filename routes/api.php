@@ -38,6 +38,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/patients', PatientController::class);
     Route::apiResource('/appointments', AppointmentController::class);
     Route::get('/departments', [DepartmentController::class, 'departments']);
+    Route::get('/all-departments', [DepartmentController::class, 'fetchAllDepartments']);
     Route::post('/departments', [DepartmentController::class, 'create']);
     Route::put('/departments/{department}', [DepartmentController::class, 'update']);
     Route::delete('/departments/{department}', [DepartmentController::class, 'delete']);
@@ -45,7 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/search-hospitals-by-department', [DepartmentController::class, 'searchHospitalByDepartment']);
     Route::post('/check-appointment', [AppointmentController::class, 'checkAppointment']);
     Route::get('/{doctorId}/appointments', [AppointmentController::class, 'appointmentsTime']);
-    Route::get('/today-appointment',[AppointmentController::class , 'todayAppointmentForDoctor']);
+    Route::get('/today-appointment', [AppointmentController::class, 'todayAppointmentForDoctor']);
     Route::post('/image-upload', [ImageController::class, 'store']);
     Route::delete('/image-upload/{id}', [ImageController::class, 'delete']);
     Route::get('/message/{receiverId?}', [MessageController::class, 'index']);

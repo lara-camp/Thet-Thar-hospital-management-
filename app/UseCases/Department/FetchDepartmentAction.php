@@ -9,14 +9,14 @@ class FetchDepartmentAction
 {
     use HttpResponses;
 
-    public function __invoke():array
+    public function __invoke(): array
     {
         $validated = request()->validate([
             'page' => 'integer',
-            'perPage' => 'integer'
+            'per_page' => 'integer'
         ]);
         $page = $validated['page'] ?? 1;
-        $perPage = $validated['perPage'] ?? 5;
+        $perPage = $validated['per_page'] ?? 5;
         $data = Department::paginate($perPage, ['*'], 'page',  $page)->withQueryString();
         $meta = $this->getPaginationMeta($data);
 
