@@ -79,7 +79,7 @@ class AppointmentController extends Controller
     }
 
     //Get Appointment Time
-    public function appointmentsTime($doctorId)
+    public function appointmentsTime(int $doctorId)
     {
         $result = (new FetchAppointmentTimeAction)($doctorId);
         return response()->json([
@@ -97,7 +97,7 @@ class AppointmentController extends Controller
     }
 
     //Leave Chat
-    public function leaveChat($bookingId)
+    public function leaveChat(int $bookingId)
     {
         (new UpdateForLeaveChatAction)($bookingId);
         return $this->success('Leave Successfully.', null);

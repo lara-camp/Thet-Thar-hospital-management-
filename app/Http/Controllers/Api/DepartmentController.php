@@ -31,18 +31,21 @@ class DepartmentController extends Controller
 
     public function create(Request $request): JsonResponse
     {
+        $this->authorize('create', Department::class);
         (new StoreDepartmentAction)($request->all());
         return $this->success('Successfully inserted.', null, 201);
     }
 
     public function update(Request $request, Department $department): JsonResponse
     {
+        $this->authorize('update', $department);
         $update = (new UpdateDepartmentAction)($request->all(), $department);
         return $this->success('Successfully updated.', $update);
     }
 
     public function delete(Department $department): JsonResponse
     {
+        $this->authorize('delete', $department);
         (new DeleteDepartmentAction)($department);
         return $this->success('Successfully deleted.');
     }
