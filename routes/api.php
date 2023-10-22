@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ImageController;
@@ -7,12 +8,13 @@ use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\HospitalController;
+use App\Http\Controllers\Api\Auth\LoginWithGoogle;
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginLogoutController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
-use App\Http\Controllers\Api\Auth\LoginWithGoogle;
+use App\Http\Controllers\Api\Auth\ProviderServiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,10 +29,11 @@ use App\Http\Controllers\Api\Auth\LoginWithGoogle;
 
 
 Route::post('/login', [LoginLogoutController::class, 'login']);
-Route::get('/auth/google', [LoginWithGoogle::class, 'loginWithGoogle']);
-Route::get('/callback/google', [LoginWithGoogle::class, 'callbackToGoogle']);
+Route::get('/auth/{provider}', [ProviderServiceController::class, 'redirectToGoogle']);
+Route::get('/auth/callback/{provider}', [ProviderServiceController::class, 'handleGoogleCallback']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/auth-user', [UserController::class, 'authUserInfo']);
     Route::post('/logout', [LoginLogoutController::class, 'logout']);
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/hospitals', HospitalController::class);
