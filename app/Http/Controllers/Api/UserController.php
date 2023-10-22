@@ -65,4 +65,9 @@ class UserController extends Controller
             'hospitalId' => $result,
         ]);
     }
+
+    public function authUserInfo(Request $request)
+    {
+        return $request->user();
+    }
 }

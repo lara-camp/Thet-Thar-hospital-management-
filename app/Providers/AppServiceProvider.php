@@ -21,5 +21,6 @@ class AppServiceProvider extends ServiceProvider
     {
         config(['fileStorage' => 'public']);
         config(['folderName' => '/images']);
+        config(['frontendUrl' => env('FRONTEND_URL'), 'http://localhost:3000']);
     }
 }
