@@ -70,7 +70,7 @@ class AppointmentController extends Controller
     }
 
     //Check Appointment
-    public function checkAppointment(Request $request)
+    public function checkAppointment(AppointmentRequest $request)
     {
         $formData = $request->all();
         $result = (new CheckAppointmentAction)($formData);

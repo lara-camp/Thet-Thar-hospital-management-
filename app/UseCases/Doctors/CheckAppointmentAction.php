@@ -81,9 +81,8 @@ class CheckAppointmentAction
 
     private function notifyPatientAndDoctor($appointment, $bookingId)
     {
-        $patientId = Auth::id();
-
-        Mail::to(User::find($patientId)->email)->send(new NotifMail(User::find($patientId)->name, $appointment));
+        $userInfo = User::find($appointment->patient_id);
+        Mail::to($userInfo->email)->send(new NotifMail($userInfo->name, $appointment));
         Message::create([
             'sender_id' => Auth::id(),
             'receiver_id' => $appointment->doctor_id,
