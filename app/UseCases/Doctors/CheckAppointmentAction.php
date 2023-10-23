@@ -26,6 +26,8 @@ class CheckAppointmentAction
         $doctorId = $formData['doctor_id'];
         $currentDate = Carbon::now()->format('Y-m-d');
         $appointmentDate = Carbon::parse($formData['appointment_date']);
+        $bookingId = $this->generateBookingId();
+        $formData['booking_id'] = $bookingId;
 
         if (!$this->isAvailableTime($doctorId, $appointmentTime)) {
             return $this->response('Appointment time is unavailable. Please choose another time.');
@@ -38,9 +40,8 @@ class CheckAppointmentAction
         }
 
         if ($this->isFutureOrCurrentDate($appointmentDate, $currentDate)) {
-            $bookingId = $this->generateBookingId();
-            $this->createAppointment($formData, $bookingId);
-            $this->notifyPatientAndDoctor($formData, $bookingId);
+            $appointment = $this->createAppointment($formData);
+            $this->notifyPatientAndDoctor($appointment, $bookingId);
             return $this->response('Appointment booked successfully.', $bookingId);
         }
 
@@ -72,21 +73,22 @@ class CheckAppointmentAction
         return substr(crc32(uniqid()), 0, 6);
     }
 
-    private function createAppointment($formData, $bookingId)
+    private function createAppointment($formData)
     {
-        $formData['booking_id'] = $bookingId;
-        Appointment::create($formData);
+        $formData['patient_id'] = Auth::id();
+        return Appointment::create($formData);
     }
 
-    private function notifyPatientAndDoctor($formData, $bookingId)
+    private function notifyPatientAndDoctor($appointment, $bookingId)
     {
         $patientId = Auth::id();
-        Mail::to(User::find($patientId)->email)->send(new NotifMail(User::find($patientId)->name, $formData));
+
+        Mail::to(User::find($patientId)->email)->send(new NotifMail(User::find($patientId)->name, $appointment));
         Message::create([
             'sender_id' => Auth::id(),
-            'receiver_id' => Doctor::find($formData['doctor_id'])->userInfo->id,
+            'receiver_id' => $appointment->doctor_id,
             'booking_id' => $bookingId,
-            'message' => $formData['description']
+            'message' => $appointment->description,
         ]);
     }
 
