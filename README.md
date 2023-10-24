@@ -68,6 +68,9 @@ superadmin@gmail.com
 ```sh
 hospitalone@gmail.com
 12345678
+
+aungzawphyo1102@gmail.com
+12345678
 ```
 
 - For Doctor
