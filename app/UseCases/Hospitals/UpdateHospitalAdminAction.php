@@ -9,7 +9,6 @@ use App\Traits\HttpResponses;
 
 class UpdateHospitalAdminAction
 {
-    use HttpResponses;
     public function __invoke(Hospital $hospital): int
     {
         $user = User::where('id', auth()->user()->id)->first(); //Change role of old admin

@@ -150,7 +150,7 @@ class DoctorController extends Controller
         ]);
     }
 
-    public function appointments(User $user)
+    public function appointments()
     {
         $result = (new GetAppointmentsAction)();
         return response()->json([

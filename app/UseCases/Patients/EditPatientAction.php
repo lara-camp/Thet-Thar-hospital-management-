@@ -7,9 +7,7 @@ use App\Models\Patient;
 
 class EditPatientAction
 {
-    use HttpResponses;
-
-    public function __invoke($formData , $patient) : Patient
+    public function __invoke($formData, $patient): Patient
     {
         $patient->update($formData);
         return $patient;

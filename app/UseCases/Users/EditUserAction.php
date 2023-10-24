@@ -8,7 +8,6 @@ use App\Traits\HttpResponses;
 
 class EditUserAction
 {
-    use HttpResponses;
     public function __invoke($formData, $user): User
     {
         if (request()->hasFile('image')) {

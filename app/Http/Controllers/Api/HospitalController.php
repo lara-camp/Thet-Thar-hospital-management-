@@ -71,7 +71,7 @@ class HospitalController extends Controller
     }
 
     //Get Hospital Doctors
-    public function hospitalDoctors($id): JsonResponse
+    public function hospitalDoctors(int $id): JsonResponse
     {
         $result = (new FetchHospitalDoctorAction())($id);
         return response()->json([
