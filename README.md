@@ -2,8 +2,19 @@
 
 This is a Hospital Management System developed by Team Fresher. We use laravel breeze , sanctum and next js for frontend.
 
+<a target="_blank" align="center">
+  <img align="right" top="500" height="300" width="400" alt="GIF" src="https://media.giphy.com/media/SWoSkN6DxTszqIKEqv/giphy.gif">
+</a>
+
+
 ## The Functions We Fought
 1. CRUD
+2. Mail Notification
+3. Authorization and Authentication
+4. Filter Function
+5. Log Rotation with laravel scheduler
+6. RealTime Chatting
+7. Oauth 2 function
 
 ## Recommended IDE Setup for local
 
