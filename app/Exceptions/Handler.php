@@ -2,8 +2,12 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Session\TokenMismatchException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class Handler extends ExceptionHandler
 {
@@ -26,5 +30,20 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof ModelNotFoundException || $exception instanceof NotFoundHttpException) {
+            return response()->json(['error' => 'The requested resource was not found.'], 404);
+        }
+        if ($exception instanceof TokenMismatchException) {
+            return redirect()->back()->withInput()->withErrors(['error' => 'The form has expired due to inactivity. Please try again.']);
+        }
+        if ($exception instanceof ValidationException) {
+            return response()->json(['error' => $exception->getMessage()], 422);
+        }
+
+        return parent::render($request, $exception);
     }
 }

@@ -82,7 +82,7 @@ class CheckAppointmentAction
     private function notifyPatientAndDoctor($appointment, $bookingId)
     {
         $userInfo = User::find($appointment->patient_id);
-        Mail::to($userInfo->email)->send(new NotifMail($userInfo->name, $appointment));
+        Mail::to($userInfo->email)->queue(new NotifMail($userInfo->name, $appointment));
         Message::create([
             'sender_id' => Auth::id(),
             'receiver_id' => $appointment->doctor_id,

@@ -4,14 +4,11 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\User;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Mail\VerificationEmail;
 use Illuminate\Http\JsonResponse;
-use App\UseCases\Auth\VerifyAction;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Redirect;
 
 class RegisterController extends Controller
@@ -26,7 +23,7 @@ class RegisterController extends Controller
 
         $user->save();
 
-        Mail::to($user->email)->send(new VerificationEmail($user));
+        Mail::to($user->email)->queue(new VerificationEmail($user));
 
         return response()->json([
             'success' => true,
