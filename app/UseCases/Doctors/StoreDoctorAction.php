@@ -2,10 +2,11 @@
 
 namespace App\UseCases\Doctors;
 
+use Carbon\Carbon;
 use App\Models\Doctor;
 use App\Helpers\FileHelper;
 use App\Models\HospitalDoctor;
-use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class StoreDoctorAction
 {
@@ -22,7 +23,15 @@ class StoreDoctorAction
 
     private function createDoctor($formData)
     {
-        return Doctor::create($formData);
+        DB::beginTransaction();
+        try {
+            $doctor = Doctor::create($formData);
+            DB::commit();
+            return $doctor;
+        } catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 
     private function createHospitalDoctorPivot($hospitalId, $doctorId)
