@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Appointment;
 use App\UseCases\Doctors\FetchTodayAppointmentForDoctorAction;
+use App\UseCases\Video\EnterVideoChatAction;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,7 @@ use App\UseCases\Appointments\FetchAppointmentAction;
 use App\UseCases\Appointments\StoreAppointmentAction;
 use App\UseCases\Appointments\DeleteAppointmentAction;
 use App\UseCases\Appointments\UpdateForLeaveChatAction;
+use Illuminate\Support\Facades\Redirect;
 
 class AppointmentController extends Controller
 {
@@ -74,7 +76,6 @@ class AppointmentController extends Controller
     {
         $formData = $request->all();
         $result = (new CheckAppointmentAction)($formData);
-
         return $this->success($result['msg'], $result['booking_id']);
     }
 
@@ -94,6 +95,13 @@ class AppointmentController extends Controller
         return response()->json([
             'data' =>   AppointmentResource::collection($result)
         ]);
+    }
+
+    //enter video chat
+    public function enterVideoChat($bookingId)
+    {
+        $roomName = (new EnterVideoChatAction())($bookingId);
+        return Redirect::to("http://localhost:3000/meeting?$roomName"); //Need to enter frontend meeting Url  //Need to update this url when frontend is ready
     }
 
     //Leave Chat

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 
 class CheckAppointmentAction
@@ -40,12 +41,30 @@ class CheckAppointmentAction
         }
 
         if ($this->isFutureOrCurrentDate($appointmentDate, $currentDate)) {
-            $appointment = $this->createAppointment($formData);
-            $this->notifyPatientAndDoctor($appointment, $bookingId);
-            return $this->response('Appointment booked successfully.', $bookingId);
+            if($formData['appointment_type'] === 'video'){
+                $roomName = $this->createMeeting();
+                $bookingId = $roomName;
+                $formData['booking_id'] = $roomName;
+            }
+                $appointment = $this->createAppointment($formData);
+                $this->notifyPatientAndDoctor($appointment, $bookingId);
+                return $this->response('Appointment booked successfully.', $bookingId);
         }
 
         return $this->response('Appointment time is over. Please choose another time.');
+    }
+
+    private function createMeeting()
+    {
+        $METERED_DOMAIN = env('METERED_DOMAIN');
+        $METERED_SECRET_KEY = env('METERED_SECRET_KEY');
+
+        $response = Http::post("https://{$METERED_DOMAIN}/api/v1/room?secretKey={$METERED_SECRET_KEY}", [
+            'autoJoin' => false
+        ]);
+
+        $roomName = $response->json('roomName');
+        return $roomName;
     }
 
     private function isAvailableTime($doctorId, $appointmentTime)

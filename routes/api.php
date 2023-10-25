@@ -33,6 +33,7 @@ Route::get('/auth/{provider}', [ProviderServiceController::class, 'redirectToGoo
 Route::get('/auth/callback/{provider}', [ProviderServiceController::class, 'handleGoogleCallback']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/enter-video-chat/{bookingId}',[AppointmentController::class , 'enterVideoChat']);
     Route::get('/auth-user', [UserController::class, 'authUserInfo']);
     Route::post('/logout', [LoginLogoutController::class, 'logout']);
     Route::apiResource('/users', UserController::class);
