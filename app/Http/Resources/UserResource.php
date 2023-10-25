@@ -18,8 +18,6 @@ class UserResource extends JsonResource
         $uri = $request->route()->uri;
         if (!$uri) return [];
 
-
-        // Only include companyName and companyStatus for /api/org
         if ($uri === 'api/dashboard/hospital/{id}/doctors') {
             return [
                 'id'      => $this->id,
@@ -32,6 +30,13 @@ class UserResource extends JsonResource
         }
 
         if ($uri === 'api/dashboard/{hospitalId}/head/assign') {
+            return [
+                'id'      => $this->id,
+                'name'    => $this->name,
+            ];
+        }
+
+        if ($uri === 'api/normal-users') {
             return [
                 'id'      => $this->id,
                 'name'    => $this->name,

@@ -9,6 +9,7 @@ use App\Traits\HttpResponses;
 use App\Exports\AppointmentExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\DoctorRequest;
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
@@ -21,8 +22,8 @@ use App\UseCases\Doctors\FetchDoctorAction;
 use App\UseCases\Doctors\GetPatientsAction;
 use App\UseCases\Doctors\StoreDoctorAction;
 use App\UseCases\Doctors\DeleteDoctorAction;
+use App\UseCases\Doctors\FetchDoctorInfoAction;
 use App\UseCases\Doctors\GetHospitalsAction;
-use Illuminate\Database\Eloquent\Collection;
 use App\UseCases\Doctors\ProfileUpdateAction;
 use App\UseCases\Doctors\GetAppointmentsAction;
 
@@ -31,22 +32,14 @@ class DoctorController extends Controller
     use HttpResponses;
 
 
-    public function counts(User $doctor)
+    public function doctorInfo(User $doctor)
     {
-        $appointmentCount = Doctor::with('appointments')->where('id', $doctor->doctor->id)->first()->appointments()->count();
-        $hospitalCount = Doctor::with('hospitals')->where('id', $doctor->doctor->id)->firstOrFail()->hospitals()->count();
-
-        $patients = new Collection([]);
-        $data = Doctor::with('patients')->where('id', $doctor->doctor->id)->firstOrFail()->patients;
-        foreach ($data as $value) {
-            $patients = $patients->add(($value->userInfo));
-        }
-        $patientCount = $patients->count();
+        $data = (new FetchDoctorInfoAction)($doctor);
 
         return response()->json([
-            'hospital' => $hospitalCount,
-            'patient' => $patientCount,
-            'appointment' => $appointmentCount,
+            'hospital' => $data['hospitalCount'],
+            'patient' => $data['patientCount'],
+            'appointment' => $data['appointmentCount'],
         ]);
     }
 
@@ -99,27 +92,10 @@ class DoctorController extends Controller
         return Excel::download(new AppointmentExport(), 'appointment.xlsx');
     }
 
-    public function updateProfile(Request $request, User $doctor)
+    public function updateProfile(UserRequest $request, User $doctor)
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'phone' => 'required|min:11|max:14|unique:users,phone,' . $doctor->id,
-            'email' => 'required|email|unique:users,email,' . $doctor->id,
-            'address' => 'nullable',
-            'password' => 'nullable',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->error($validator->errors()->first(), null, 422);
-        }
-
-        $formData = [
-            "name" => $request->name,
-            "email" => $request->email,
-            "phone" => $request->phone,
-            "address" => $request->address,
-            "password" => $request->password ? Hash::make($request->password) : $doctor->password,
-        ];
+        $formData = $request->all();
+        $formData['password'] = $request->password ? Hash::make($request->password) : $doctor->password;
 
         $doctor = (new ProfileUpdateAction)($formData, $doctor);
         return $this->success('Successfully updated.', [
