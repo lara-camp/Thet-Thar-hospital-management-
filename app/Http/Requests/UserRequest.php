@@ -34,7 +34,7 @@ class UserRequest extends FormRequest
 
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
             $rules['name'] = 'nullable|string|max:100';
-            $rules['email'] = 'nullable|email|unique:users,email,' . $this->user->id;
+            $rules['email'] = 'nullable|email|unique:users,email,' . $this->id ?? $this->user->id;
             $rules['password'] = 'nullable|string|min:8|Password::min(8)->letters()';
             $rules['phone'] = 'nullable|string|max:100';
             $rules['address'] = 'nullable|string|max:100';
