@@ -104,7 +104,8 @@ class AppointmentController extends Controller
         return Redirect::to("http://127.0.0.1:8000/api/video-chat/{$roomName}"); //Need to enter frontend meeting Url  //Need to update this url when frontend is ready
     }
 
-    public function redirectToMeetingPage($meetingId){
+    public function redirectToMeetingPage($meetingId)
+    {
         $METERED_DOMAIN = env('METERED_DOMAIN');
         return view('meeting', [
             'METERED_DOMAIN' => $METERED_DOMAIN,

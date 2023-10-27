@@ -30,13 +30,13 @@ use App\Http\Controllers\VideoController;
 
 
 Route::post('/login', [LoginLogoutController::class, 'login']);
-Route::get('/video',[VideoController::class , 'createMeeting']);
+Route::get('/video', [VideoController::class, 'createMeeting']);
 Route::get('/auth/{provider}', [ProviderServiceController::class, 'redirectToGoogle']);
 Route::get('/auth/callback/{provider}', [ProviderServiceController::class, 'handleGoogleCallback']);
-Route::get('/video-chat/{meetingId}', [AppointmentController::class , 'redirectToMeetingPage']);
+Route::get('/video-chat/{meetingId}', [AppointmentController::class, 'redirectToMeetingPage']);
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/enter-video-chat/{bookingId}',[AppointmentController::class , 'enterVideoChat']); //Video chat
+    Route::get('/enter-video-chat/{bookingId}', [AppointmentController::class, 'enterVideoChat']); //Video chat
     Route::get('/auth-user', [UserController::class, 'authUserInfo']);
     Route::post('/logout', [LoginLogoutController::class, 'logout']);
     Route::apiResource('/users', UserController::class);
