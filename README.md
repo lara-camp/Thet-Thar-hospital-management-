@@ -14,7 +14,8 @@ This is a Hospital Management System developed by Team Fresher. We use laravel b
 4. Filter Function
 5. Log Rotation with laravel scheduler
 6. RealTime Chatting
-7. Oauth 2 function
+7. Oauth 2 function (github , gmail)
+8. RealTime Video Chatting
 
 ## Recommended IDE Setup for local
 
@@ -66,9 +67,6 @@ superadmin@gmail.com
 
 - For Hospital Admin
 ```sh
-hospitalone@gmail.com
-12345678
-
 aungzawphyo1102@gmail.com
 12345678
 ```
