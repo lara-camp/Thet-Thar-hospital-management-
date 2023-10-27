@@ -19,7 +19,7 @@ class EnterVideoChatAction
             $roomName = $response->json("roomName");
             return $roomName;
         }
-        return null;
+        return "Nope";
     }
     private function checkRole($bookingId)
     {
