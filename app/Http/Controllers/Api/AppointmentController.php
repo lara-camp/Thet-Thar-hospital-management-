@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\Appointment;
 use App\UseCases\Doctors\FetchTodayAppointmentForDoctorAction;
+use App\UseCases\Video\EnterVideoChatAction;
 use Illuminate\Http\Request;
 use App\Traits\HttpResponses;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,7 @@ use App\UseCases\Appointments\FetchAppointmentAction;
 use App\UseCases\Appointments\StoreAppointmentAction;
 use App\UseCases\Appointments\DeleteAppointmentAction;
 use App\UseCases\Appointments\UpdateForLeaveChatAction;
+use Illuminate\Support\Facades\Redirect;
 
 class AppointmentController extends Controller
 {
@@ -70,16 +72,15 @@ class AppointmentController extends Controller
     }
 
     //Check Appointment
-    public function checkAppointment(Request $request)
+    public function checkAppointment(AppointmentRequest $request)
     {
         $formData = $request->all();
         $result = (new CheckAppointmentAction)($formData);
-
         return $this->success($result['msg'], $result['booking_id']);
     }
 
     //Get Appointment Time
-    public function appointmentsTime($doctorId)
+    public function appointmentsTime(int $doctorId)
     {
         $result = (new FetchAppointmentTimeAction)($doctorId);
         return response()->json([
@@ -96,8 +97,24 @@ class AppointmentController extends Controller
         ]);
     }
 
+    //enter video chat
+    public function enterVideoChat($bookingId)
+    {
+        $roomName = (new EnterVideoChatAction())($bookingId);
+        return Redirect::to("http://127.0.0.1:8000/api/video-chat/{$roomName}"); //Need to enter frontend meeting Url  //Need to update this url when frontend is ready
+    }
+
+    public function redirectToMeetingPage($meetingId)
+    {
+        $METERED_DOMAIN = env('METERED_DOMAIN');
+        return view('meeting', [
+            'METERED_DOMAIN' => $METERED_DOMAIN,
+            'MEETING_ID' => $meetingId
+        ]);
+    }
+
     //Leave Chat
-    public function leaveChat($bookingId)
+    public function leaveChat(int $bookingId)
     {
         (new UpdateForLeaveChatAction)($bookingId);
         return $this->success('Leave Successfully.', null);

@@ -23,8 +23,8 @@ class User extends Authenticatable
         'password',
         'email',
         'phone',
-        'gauth_id',
-        'gauth_type',
+        'provider_id',
+        'provider_name',
         'address',
         'role',
         'is_visible',
@@ -77,5 +77,19 @@ class User extends Authenticatable
     public function hospitalAdmin()
     {
         return $this->morphTo();
+    }
+    public static function clientID()
+    {
+        return 'zoom_client_of_user';
+    }
+
+    public static function clientSecret()
+    {
+        return 'zoom_client_secret_of_user';
+    }
+
+    public static function accountID()
+    {
+        return 'zoom_account_id_of_user';
     }
 }

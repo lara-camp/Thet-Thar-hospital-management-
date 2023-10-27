@@ -10,7 +10,6 @@ use App\Traits\HttpResponses;
 
 class FetchDashboardDataAction
 {
-    use HttpResponses;
 
     public function __invoke($hospital_id): array
     {

@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\ImageController;
@@ -7,12 +8,14 @@ use App\Http\Controllers\Api\DoctorController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\PatientController;
 use App\Http\Controllers\Api\HospitalController;
+use App\Http\Controllers\Api\Auth\LoginWithGoogle;
 use App\Http\Controllers\Api\DepartmentController;
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\LoginLogoutController;
 use App\Http\Controllers\Api\Auth\ForgotPasswordController;
-use App\Http\Controllers\Api\Auth\LoginWithGoogle;
+use App\Http\Controllers\Api\Auth\ProviderServiceController;
+use App\Http\Controllers\VideoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,10 +30,14 @@ use App\Http\Controllers\Api\Auth\LoginWithGoogle;
 
 
 Route::post('/login', [LoginLogoutController::class, 'login']);
-Route::get('/auth/google', [LoginWithGoogle::class, 'loginWithGoogle']);
-Route::get('/callback/google', [LoginWithGoogle::class, 'callbackToGoogle']);
+Route::get('/video', [VideoController::class, 'createMeeting']);
+Route::get('/auth/{provider}', [ProviderServiceController::class, 'redirectToGoogle']);
+Route::get('/auth/callback/{provider}', [ProviderServiceController::class, 'handleGoogleCallback']);
+Route::get('/video-chat/{meetingId}', [AppointmentController::class, 'redirectToMeetingPage']);
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/enter-video-chat/{bookingId}', [AppointmentController::class, 'enterVideoChat']); //Video chat
+    Route::get('/auth-user', [UserController::class, 'authUserInfo']);
     Route::post('/logout', [LoginLogoutController::class, 'logout']);
     Route::apiResource('/users', UserController::class);
     Route::apiResource('/hospitals', HospitalController::class);
@@ -38,6 +45,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/patients', PatientController::class);
     Route::apiResource('/appointments', AppointmentController::class);
     Route::get('/departments', [DepartmentController::class, 'departments']);
+    Route::get('/all-departments', [DepartmentController::class, 'fetchAllDepartments']);
     Route::post('/departments', [DepartmentController::class, 'create']);
     Route::put('/departments/{department}', [DepartmentController::class, 'update']);
     Route::delete('/departments/{department}', [DepartmentController::class, 'delete']);
@@ -45,7 +53,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/search-hospitals-by-department', [DepartmentController::class, 'searchHospitalByDepartment']);
     Route::post('/check-appointment', [AppointmentController::class, 'checkAppointment']);
     Route::get('/{doctorId}/appointments', [AppointmentController::class, 'appointmentsTime']);
-    Route::get('/today-appointment',[AppointmentController::class , 'todayAppointmentForDoctor']);
+    Route::get('/today-appointment', [AppointmentController::class, 'todayAppointmentForDoctor']);
     Route::post('/image-upload', [ImageController::class, 'store']);
     Route::delete('/image-upload/{id}', [ImageController::class, 'delete']);
     Route::get('/message/{receiverId?}', [MessageController::class, 'index']);
@@ -59,12 +67,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('/dashboard/{hospitalId}/head', [HospitalController::class, 'updateHead']);
     Route::get('/appointment/export', [DoctorController::class, 'exportAppointment']);
     Route::get('/fetch-hospital', [UserController::class, 'fetchUserHospital']); //fetch the user of hospital if user is HospitalAdmin
-
     // Doctor Dashboard
-    Route::get('/dashboard/doctor/{doctor}/counts', [DoctorController::class, 'counts']);
+    Route::get('/dashboard/doctor/{doctor}/counts', [DoctorController::class, 'doctorInfo']);
     Route::get('/dashboard/doctor/{doctor}/hospitals', [DoctorController::class, 'hospitals']);
     Route::get('/dashboard/doctor/{doctor}/patients', [DoctorController::class, 'patients']);
-    Route::post('/dashboard/doctor/{doctor}/update', [DoctorController::class, 'updateProfile']);
+    Route::put('/dashboard/doctor/{doctor}/update', [DoctorController::class, 'updateProfile']);
     Route::get('/dashboard/doctor/{doctor}/appointments', [DoctorController::class, 'appointments']);
 });
 

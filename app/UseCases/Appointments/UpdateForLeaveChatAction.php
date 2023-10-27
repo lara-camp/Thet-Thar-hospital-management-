@@ -8,7 +8,7 @@ class UpdateForLeaveChatAction
 {
     public function __invoke($bookingId): int
     {
-        $appointment = Appointment::where('booking_id', $bookingId);
+        $appointment = Appointment::where('booking_id', $bookingId)->first();
         $appointment->update([
             'is_visible' => false,
             'status' => 'completed'

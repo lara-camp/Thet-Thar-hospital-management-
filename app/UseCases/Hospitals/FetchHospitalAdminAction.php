@@ -11,8 +11,6 @@ use App\Traits\HttpResponses;
 
 class FetchHospitalAdminAction
 {
-    use HttpResponses;
-
     public function __invoke($hospital_id): User
     {
 

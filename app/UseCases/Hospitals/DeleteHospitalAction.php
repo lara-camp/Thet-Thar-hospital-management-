@@ -8,7 +8,6 @@ use App\Traits\HttpResponses;
 
 class DeleteHospitalAction
 {
-    use HttpResponses;
     public function __invoke($hospital): int
     {
         $deleteData = Hospital::where('id', $hospital->id)->firstOrFail();

@@ -3,16 +3,11 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\User;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Mail\VerificationEmail;
 use App\Models\ResetCodePassword;
 use App\Mail\SendCodeResetPassword;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Validation\Rules\Password;
-use App\UseCases\Auth\ResetPasswordAction;
-use App\UseCases\Auth\ForgotPasswordAction;
 
 class  ForgotPasswordController extends Controller
 {
@@ -25,7 +20,7 @@ class  ForgotPasswordController extends Controller
         ResetCodePassword::where('email', $request->email)->delete(); // Delete all old code that user send before.
         $data['code'] = mt_rand(100000, 999999);   // Generate random code
         $codeData = ResetCodePassword::create($data); // Create a new code
-        Mail::to($request->email)->send(new SendCodeResetPassword($codeData->code)); // Send email to user
+        Mail::to($request->email)->queue(new SendCodeResetPassword($codeData->code)); // Send email to user
 
         return response(['message' => trans('passwords.sent')], 200);
     }

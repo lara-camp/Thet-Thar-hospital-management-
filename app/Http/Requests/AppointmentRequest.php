@@ -23,18 +23,18 @@ class AppointmentRequest extends FormRequest
     {
 
         $rules = [
-            'patient_id' => 'required|exists:patients,id',
-            'doctor_id' => 'required|exists:doctors,id',
+            'patient_id' => 'required|integer|exists:users,id',
+            'doctor_id' => 'required|integer|exists:doctors,id',
             'appointment_date' => 'required|date',
             'description' => 'nullable|string',
             'status' => 'nullable|in:completed,pending,rejected',
             'type' => 'nullable|in:online,offline',
-            'is_visible' => 'boolean',
+            'is_visible' => 'nullable|boolean',
         ];
 
         if ($this->isMethod('PUT') || $this->isMethod('PATCH')) {
-            $rules['patient_id'] = 'required|exists:patients,id';
-            $rules['doctor_id'] = 'required|exists:doctors,id';
+            $rules['patient_id'] = 'required|integer|exists:users,id';
+            $rules['doctor_id'] = 'required|integer|exists:doctors,id';
             $rules['appointment_date'] = 'required|date';
             $rules['description'] = 'nullable|string';
             $rules['status'] = 'nullable|in:completed,pending,rejected';
